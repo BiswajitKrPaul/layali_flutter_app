@@ -1,0 +1,16 @@
+{   
+    "@@locale": "en",
+    "email": "Email",
+    "@email": {
+    },
+    "password": "Password",
+    "@password": {},
+    "login": "Login",
+    "@login": {},
+    "register": "Register",
+    "@register": {},
+    "loginSuccess":"Login Successful",
+    "@loginSuccess": {},
+    "invalidLogin": "Invalid Login Credentials",
+    "@invalidLogin": {}
+}

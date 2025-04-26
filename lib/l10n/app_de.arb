@@ -1,0 +1,15 @@
+{
+    "@@locale": "de",
+    "email": "E-Mail-Adresse",
+    "@email": {},
+    "password": "Passwort",
+    "@password": {},
+    "login": "Einloggen",
+    "@login": {},
+    "register": "Registrieren",
+    "@register": {},
+    "loginSuccess": "Anmeldung war erfolgreich",
+    "@loginSuccess": {},
+    "invalidLogin": "Ungültige Anmeldedaten. Bitte überprüfen Sie Ihre Eingaben.",
+    "@invalidLogin": {}
+}
