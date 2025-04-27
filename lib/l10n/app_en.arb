@@ -12,5 +12,19 @@
     "loginSuccess":"Login Successful",
     "@loginSuccess": {},
     "invalidLogin": "Invalid Login Credentials",
-    "@invalidLogin": {}
+    "@invalidLogin": {},
+    "explore": "Explore",
+    "@explore": {},
+    "wishlist": "Wishlist",
+    "@wishlist": {},
+    "profile": "Profile",
+    "@profile": {},
+    "logout": "Logout",
+    "@logout": {},
+    "trips": "Trips",
+    "@trips": {},
+    "inbox": "Inbox",
+    "@inbox": {},
+    "emailOrPasswordEmpty": "Email or Password is empty",
+    "@emailOrPasswordEmpty": {}
 }

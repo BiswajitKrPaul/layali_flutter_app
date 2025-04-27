@@ -6,6 +6,8 @@ part 'env.g.dart';
 abstract class Env {
   @EnviedField(varName: 'BASE_URL')
   static final String baseUrl = _Env.baseUrl;
+  @EnviedField(varName: 'TOKEN_KEY')
+  static final String tokenKey = _Env.tokenKey;
 
   // @EnviedField(varName: 'LOGIN_PATH')
   // static final String loginPath = _Env.loginPath;

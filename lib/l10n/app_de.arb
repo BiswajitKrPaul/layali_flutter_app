@@ -11,5 +11,19 @@
     "loginSuccess": "Anmeldung war erfolgreich",
     "@loginSuccess": {},
     "invalidLogin": "Ungültige Anmeldedaten. Bitte überprüfen Sie Ihre Eingaben.",
-    "@invalidLogin": {}
+    "@invalidLogin": {},
+    "explore": "Entdecken",
+    "@explore": {},
+    "wishlist": "Wunschliste",
+    "@wishlist": {},
+    "profile": "Profil",
+    "@profile": {},
+    "logout": "Abmelden",
+    "@logout": {},
+    "trips": "Reisen",
+    "@trips": {},
+    "inbox": "Posteingang",
+    "@inbox": {},
+    "emailOrPasswordEmpty": "E-Mail oder Passwort ist leer",
+    "@emailOrPasswordEmpty": {}
 }

@@ -25,4 +25,25 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invalidLogin => 'Ungültige Anmeldedaten. Bitte überprüfen Sie Ihre Eingaben.';
+
+  @override
+  String get explore => 'Entdecken';
+
+  @override
+  String get wishlist => 'Wunschliste';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get logout => 'Abmelden';
+
+  @override
+  String get trips => 'Reisen';
+
+  @override
+  String get inbox => 'Posteingang';
+
+  @override
+  String get emailOrPasswordEmpty => 'E-Mail oder Passwort ist leer';
 }

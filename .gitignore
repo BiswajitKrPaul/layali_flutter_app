@@ -46,3 +46,4 @@ app.*.map.json
 .env
 lib/env.g.dart
 *.*.dart
+Abfinal-release_27_03.apk

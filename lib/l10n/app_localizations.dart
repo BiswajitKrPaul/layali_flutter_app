@@ -130,6 +130,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid Login Credentials'**
   String get invalidLogin;
+
+  /// No description provided for @explore.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore'**
+  String get explore;
+
+  /// No description provided for @wishlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Wishlist'**
+  String get wishlist;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @trips.
+  ///
+  /// In en, this message translates to:
+  /// **'Trips'**
+  String get trips;
+
+  /// No description provided for @inbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbox'**
+  String get inbox;
+
+  /// No description provided for @emailOrPasswordEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Email or Password is empty'**
+  String get emailOrPasswordEmpty;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -25,4 +25,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invalidLogin => 'Invalid Login Credentials';
+
+  @override
+  String get explore => 'Explore';
+
+  @override
+  String get wishlist => 'Wishlist';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get trips => 'Trips';
+
+  @override
+  String get inbox => 'Inbox';
+
+  @override
+  String get emailOrPasswordEmpty => 'Email or Password is empty';
 }

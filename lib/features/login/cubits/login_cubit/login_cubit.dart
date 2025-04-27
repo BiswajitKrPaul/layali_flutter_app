@@ -1,22 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:layali_flutter_app/app_router.dart';
+import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:layali_flutter_app/common/utils/mixin_utils.dart';
 import 'package:layali_flutter_app/data/login_response.dart';
 import 'package:layali_flutter_app/domain/rest_client.dart';
+import 'package:layali_flutter_app/domain/storage_service.dart';
 import 'package:layali_flutter_app/injection.dart';
 import 'package:layali_flutter_app/services/auth_service.dart';
 
 part 'login_cubit.freezed.dart';
 part 'login_state.dart';
 
-@singleton
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginState.initial());
 
-  final authService = getIt.get<RestService>().client.getService<AuthService>();
+  final authService =
+      getIt.get<RestUnprotectedService>().client.getService<AuthService>();
 
   void setEmail(String? value) {
     softReset();
@@ -32,14 +33,21 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(password: value ?? ""));
   }
 
+  void togglePasswordVisible() {
+    softReset();
+    emit(state.copyWith(isPasswordVisible: !state.isPasswordVisible));
+  }
+
   Future<void> login() async {
     softReset();
     emit(state.copyWith(isLoading: true));
     final response = await authService.login(state.email, state.password);
     try {
       if (response.isSuccessful) {
+        final loginResponse = LoginResponse.fromJson(response.body!);
+        getIt.get<StorageService>().saveToken(loginResponse.accessToken);
+        getIt.get<AuthenticationCubit>().setToken(loginResponse.accessToken);
         emit(state.copyWith(isLoading: false, isDone: true));
-        debugPrint(LoginResponse.fromJson(response.body!).toString());
       } else {
         emit(
           state.copyWith(

@@ -7,7 +7,7 @@ import 'package:layali_flutter_app/l10n/app_localizations.dart';
 part 'app_language_cubit.freezed.dart';
 part 'app_language_state.dart';
 
-@singleton
+@lazySingleton
 class AppLanguageCubit extends Cubit<AppLanguageState> {
   AppLanguageCubit() : super(AppLanguageState());
 
