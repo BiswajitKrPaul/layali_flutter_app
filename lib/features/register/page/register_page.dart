@@ -41,7 +41,11 @@ class RegisterPage extends StatelessWidget implements AutoRouteWrapper {
                 } else if (state.hasError) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(context.localizations.registerFailed),
+                      content: Text(
+                        state.errorMessage.isEmpty
+                            ? context.localizations.registerFailed
+                            : state.errorMessage,
+                      ),
                     ),
                   );
                 }
@@ -58,11 +62,7 @@ class RegisterPage extends StatelessWidget implements AutoRouteWrapper {
                         context.localizations.firstName,
                       ),
                       validator:
-                          ValidationBuilder()
-                              .minLength(5)
-                              .maxLength(50)
-                              .required()
-                              .build(),
+                          ValidationBuilder().maxLength(50).required().build(),
                     ), // First Name
                     TextFormField(
                       keyboardType: TextInputType.name,
@@ -71,11 +71,7 @@ class RegisterPage extends StatelessWidget implements AutoRouteWrapper {
                         context.localizations.lastName,
                       ),
                       validator:
-                          ValidationBuilder()
-                              .minLength(5)
-                              .maxLength(50)
-                              .required()
-                              .build(),
+                          ValidationBuilder().maxLength(50).required().build(),
                     ), // Last Name
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,

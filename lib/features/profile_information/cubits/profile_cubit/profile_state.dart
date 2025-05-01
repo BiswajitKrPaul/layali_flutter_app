@@ -6,6 +6,7 @@ abstract class ProfileState with _$ProfileState {
     @Default(false) bool isLoading,
     @Default(false) bool hasError,
     @Default(false) bool isDone,
+    @Default('') String errorMessage,
     @Default('') String firstName,
     @Default('') String lastName,
     @Default('') String email,

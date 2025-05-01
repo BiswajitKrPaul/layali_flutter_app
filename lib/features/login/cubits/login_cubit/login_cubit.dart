@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:layali_flutter_app/app_router.dart';
 import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentication_cubit.dart';
-import 'package:layali_flutter_app/common/utils/extension_utils.dart';
+import 'package:layali_flutter_app/data/error_response.dart';
 import 'package:layali_flutter_app/data/login_response.dart';
 import 'package:layali_flutter_app/domain/rest_client.dart';
 import 'package:layali_flutter_app/domain/storage_service.dart';
@@ -54,29 +53,14 @@ class LoginCubit extends Cubit<LoginState> {
             isLoading: false,
             hasError: true,
             errorMessage:
-                getIt
-                    .get<AppRouter>()
-                    .navigatorKey
-                    .currentContext!
-                    .localizations
-                    .invalidLogin,
+                ErrorResponse.fromJson(
+                  (response.error as Map<String, dynamic>?) ?? {},
+                ).detail,
           ),
         );
       }
     } catch (e) {
-      emit(
-        state.copyWith(
-          isLoading: false,
-          hasError: true,
-          errorMessage:
-              getIt
-                  .get<AppRouter>()
-                  .navigatorKey
-                  .currentContext!
-                  .localizations
-                  .invalidLogin,
-        ),
-      );
+      emit(state.copyWith(isLoading: false, hasError: true));
     }
   }
 }

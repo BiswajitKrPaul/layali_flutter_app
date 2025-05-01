@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentication_cubit.dart';
+import 'package:layali_flutter_app/data/error_response.dart';
 import 'package:layali_flutter_app/data/user.dart';
 import 'package:layali_flutter_app/domain/rest_client.dart';
 import 'package:layali_flutter_app/injection.dart';
@@ -55,7 +56,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   void softReset() {
-    emit(state.copyWith(isDone: false, hasError: false));
+    emit(state.copyWith(isDone: false, hasError: false, errorMessage: ''));
   }
 
   Future<void> updateProfile() async {
@@ -69,7 +70,16 @@ class ProfileCubit extends Cubit<ProfileState> {
         getIt.get<AuthenticationCubit>().updateUser(user);
         emit(state.copyWith(isDone: true, isLoading: false));
       } else {
-        emit(state.copyWith(hasError: true, isLoading: false));
+        emit(
+          state.copyWith(
+            hasError: true,
+            isLoading: false,
+            errorMessage:
+                ErrorResponse.fromJson(
+                  (response.error as Map<String, dynamic>?) ?? {},
+                ).detail,
+          ),
+        );
       }
     } catch (e) {
       emit(state.copyWith(hasError: true, isLoading: false));

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:layali_flutter_app/data/error_response.dart';
 import 'package:layali_flutter_app/domain/rest_client.dart';
 import 'package:layali_flutter_app/injection.dart';
 import 'package:layali_flutter_app/services/auth_service.dart';
@@ -51,7 +52,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   void softReset() {
-    emit(state.copyWith(hasError: false, isDone: false));
+    emit(state.copyWith(hasError: false, isDone: false, errorMessage: ''));
   }
 
   Future<void> register() async {
@@ -68,7 +69,16 @@ class RegisterCubit extends Cubit<RegisterState> {
       if (response.isSuccessful) {
         emit(state.copyWith(isLoading: false, isDone: true));
       } else {
-        emit(state.copyWith(isLoading: false, hasError: true));
+        emit(
+          state.copyWith(
+            isLoading: false,
+            hasError: true,
+            errorMessage:
+                ErrorResponse.fromJson(
+                  (response.error as Map<String, dynamic>?) ?? {},
+                ).detail,
+          ),
+        );
       }
     } catch (e) {
       emit(state.copyWith(isLoading: false, hasError: true));

@@ -31,9 +31,15 @@ class LoginPage extends StatelessWidget implements AutoRouteWrapper {
             );
             context.router.replaceAll(const [HomePageRoute()]);
           } else if (state.hasError) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.errorMessage.isEmpty
+                      ? context.localizations.invalidLogin
+                      : state.errorMessage,
+                ),
+              ),
+            );
           }
         },
         builder: (context, loginState) {

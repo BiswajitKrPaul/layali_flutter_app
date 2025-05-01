@@ -60,7 +60,11 @@ class ProfileInfoPage extends StatelessWidget implements AutoRouteWrapper {
                   } else if (state.hasError) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(context.localizations.updateFailed),
+                        content: Text(
+                          state.errorMessage.isEmpty
+                              ? context.localizations.updateFailed
+                              : state.errorMessage,
+                        ),
                       ),
                     );
                   }

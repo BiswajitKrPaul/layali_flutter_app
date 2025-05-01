@@ -6,6 +6,7 @@ abstract class RegisterState with _$RegisterState {
     @Default(false) bool isDone,
     @Default(false) bool isLoading,
     @Default(false) bool hasError,
+    @Default('') String errorMessage,
     @Default('') String firstName,
     @Default('') String lastName,
     @Default('') String email,
