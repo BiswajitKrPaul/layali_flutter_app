@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:layali_flutter_app/app_router.gr.dart';
 import 'package:layali_flutter_app/common/cubits/app_language_cubit/app_language_cubit.dart';
-import 'package:layali_flutter_app/common/utils/mixin_utils.dart';
+import 'package:layali_flutter_app/common/utils/extension_utils.dart';
 import 'package:layali_flutter_app/features/login/cubits/login_cubit/login_cubit.dart';
 import 'package:layali_flutter_app/gen/assets.gen.dart';
 import 'package:recase/recase.dart';
@@ -38,13 +38,12 @@ class LoginPage extends StatelessWidget implements AutoRouteWrapper {
         },
         builder: (context, loginState) {
           return SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 50),
+            padding: const EdgeInsets.symmetric(horizontal: 50),
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height,
+                maxHeight: MediaQuery.of(context).size.longestSide,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 16,
                 children: [
@@ -56,7 +55,7 @@ class LoginPage extends StatelessWidget implements AutoRouteWrapper {
                     onChanged: context.read<LoginCubit>().setEmail,
                     decoration: InputDecoration(
                       labelText: context.localizations.email,
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.emailAddress,
                   ),
@@ -102,7 +101,9 @@ class LoginPage extends StatelessWidget implements AutoRouteWrapper {
                           child: Text(context.localizations.login.titleCase),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.router.push(const RegisterPageRoute());
+                          },
                           child: Text(context.localizations.register.titleCase),
                         ),
                       ],

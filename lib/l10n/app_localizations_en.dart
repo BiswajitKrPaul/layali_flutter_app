@@ -46,4 +46,67 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emailOrPasswordEmpty => 'Email or Password is empty';
+
+  @override
+  String get passwordDoesNotMatch => 'Password does not match with confirm password';
+
+  @override
+  String get firstName => 'First Name';
+
+  @override
+  String get lastName => 'Last Name';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get registerSuccess => 'Registration Successful';
+
+  @override
+  String get thisFieldIsRequired => 'This field is required';
+
+  @override
+  String get registerFailed => 'Registration Failed';
+
+  @override
+  String get accountSettings => 'Account Settings';
+
+  @override
+  String get personalInformation => 'Personal Information';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get address => 'Address';
+
+  @override
+  String get emergencyContact => 'Emergency Contact';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get housing => 'Housing';
+
+  @override
+  String get listYourSpace => 'List your space';
+
+  @override
+  String get paymentsAndPayouts => 'Payments & Payouts';
+
+  @override
+  String get tools => 'Tools';
+
+  @override
+  String get termAndService => 'Term and Services';
+
+  @override
+  String get updatedSucessfully => 'Updated Successfully';
+
+  @override
+  String get updateFailed => 'Update Failed';
 }

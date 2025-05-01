@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:layali_flutter_app/app_router.gr.dart';
 import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentication_cubit.dart';
-import 'package:layali_flutter_app/common/utils/mixin_utils.dart';
+import 'package:layali_flutter_app/common/utils/extension_utils.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
         }
       },
       child: AutoTabsScaffold(
-        routes: [
+        routes: const [
           ExplorePageRoute(),
           WishlistPageRoute(),
           TripsPageRoute(),
@@ -31,23 +31,23 @@ class HomePage extends StatelessWidget {
             onDestinationSelected: tabsRouter.setActiveIndex,
             destinations: [
               NavigationDestination(
-                icon: Icon(Icons.search_outlined),
+                icon: const Icon(Icons.search_outlined),
                 label: context.localizations.explore,
               ),
               NavigationDestination(
-                icon: Icon(Icons.favorite_outline),
+                icon: const Icon(Icons.favorite_outline),
                 label: context.localizations.wishlist,
               ),
               NavigationDestination(
-                icon: Icon(Icons.map_outlined),
+                icon: const Icon(Icons.map_outlined),
                 label: context.localizations.trips,
               ),
               NavigationDestination(
-                icon: Icon(Icons.message_outlined),
+                icon: const Icon(Icons.message_outlined),
                 label: context.localizations.inbox,
               ),
               NavigationDestination(
-                icon: Icon(Icons.person_outlined),
+                icon: const Icon(Icons.person_outlined),
                 label: context.localizations.profile,
               ),
             ],

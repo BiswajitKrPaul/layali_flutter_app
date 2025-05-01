@@ -10,6 +10,7 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
     AutoRoute(page: LoginPageRoute.page),
+    AutoRoute(page: RegisterPageRoute.page),
     AutoRoute(
       page: HomePageRoute.page,
       initial: true,
@@ -22,6 +23,7 @@ class AppRouter extends RootStackRouter {
       ],
       guards: [AuthGuard()],
     ),
+    AutoRoute(page: ProfileInfoPageRoute.page, guards: [AuthGuard()]),
   ];
 }
 
@@ -31,9 +33,9 @@ class AuthGuard extends AutoRouteGuard {
     final isAuthenticated =
         getIt.get<AuthenticationCubit>().state.isAuthenticated;
     if (isAuthenticated) {
-      resolver.next(true);
+      resolver.next();
     } else {
-      resolver.redirectUntil(LoginPageRoute());
+      resolver.redirectUntil(const LoginPageRoute());
     }
   }
 }

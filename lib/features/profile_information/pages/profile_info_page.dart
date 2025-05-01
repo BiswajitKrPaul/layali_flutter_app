@@ -1,0 +1,180 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_validator/form_validator.dart';
+import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentication_cubit.dart';
+import 'package:layali_flutter_app/common/utils/extension_utils.dart';
+import 'package:layali_flutter_app/features/profile_information/cubits/profile_cubit/profile_cubit.dart';
+
+final _formKey = GlobalKey<FormState>();
+
+@RoutePage()
+class ProfileInfoPage extends StatelessWidget implements AutoRouteWrapper {
+  const ProfileInfoPage({super.key});
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create:
+          (context) =>
+              ProfileCubit()
+                ..setUserData(context.read<AuthenticationCubit>().state.user!),
+      child: this,
+    );
+  }
+
+  InputDecoration _textFormFieldDecoration(String labelText, {Widget? suffix}) {
+    return InputDecoration(
+      labelText: labelText,
+      border: const OutlineInputBorder(),
+      suffixIcon: suffix,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ValidationBuilder.setLocale(context.localizations.localeName);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          '${context.localizations.edit} ${context.localizations.profile}',
+        ),
+      ),
+      body: Scaffold(
+        body: Form(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.longestSide,
+              ),
+              child: BlocConsumer<ProfileCubit, ProfileState>(
+                listener: (context, state) {
+                  if (state.isDone) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(context.localizations.updatedSucessfully),
+                      ),
+                    );
+                  } else if (state.hasError) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(context.localizations.updateFailed),
+                      ),
+                    );
+                  }
+                },
+                builder: (context, profileInfoState) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Column(
+                      spacing: 24,
+                      children: [
+                        const CircleAvatar(
+                          radius: 68,
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: Icon(Icons.camera_alt, size: 36),
+                              ),
+                            ],
+                          ),
+                        ),
+                        TextFormField(
+                          initialValue: profileInfoState.firstName,
+                          onChanged: context.read<ProfileCubit>().setFirstName,
+                          keyboardType: TextInputType.name,
+                          decoration: _textFormFieldDecoration(
+                            context.localizations.firstName,
+                          ),
+                          validator:
+                              ValidationBuilder()
+                                  .maxLength(50)
+                                  .required()
+                                  .build(),
+                        ), // First Name
+                        TextFormField(
+                          initialValue: profileInfoState.lastName,
+                          keyboardType: TextInputType.name,
+                          onChanged: context.read<ProfileCubit>().setLastName,
+                          decoration: _textFormFieldDecoration(
+                            context.localizations.lastName,
+                          ),
+                          validator:
+                              ValidationBuilder()
+                                  .maxLength(50)
+                                  .required()
+                                  .build(),
+                        ), // Last Name
+                        TextFormField(
+                          initialValue: profileInfoState.email,
+                          enabled: false,
+                          decoration: _textFormFieldDecoration(
+                            context.localizations.email,
+                          ),
+                        ), // Email
+                        TextFormField(
+                          onChanged:
+                              context.read<ProfileCubit>().setPhoneNumber,
+                          initialValue: profileInfoState.phoneNumber,
+                          keyboardType: TextInputType.phone,
+                          decoration: _textFormFieldDecoration(
+                            context.localizations.phoneNumber,
+                          ),
+                          validator:
+                              ValidationBuilder().phone().required().build(),
+                        ), // Password
+                        TextFormField(
+                          onChanged:
+                              context.read<ProfileCubit>().setEmergencyContact,
+                          keyboardType: TextInputType.phone,
+                          initialValue: profileInfoState.emergencyContact,
+                          decoration: _textFormFieldDecoration(
+                            context.localizations.emergencyContact,
+                          ),
+                          validator:
+                              ValidationBuilder().phone().required().build(),
+                        ), // Confirm Password
+                        TextFormField(
+                          onChanged: context.read<ProfileCubit>().setAddress,
+                          keyboardType: TextInputType.streetAddress,
+                          initialValue: profileInfoState.address,
+                          decoration: _textFormFieldDecoration(
+                            context.localizations.address,
+                          ),
+                          validator: ValidationBuilder().required().build(),
+                        ),
+                        Visibility(
+                          visible: profileInfoState.isLoading,
+                          child: const CircularProgressIndicator(),
+                        ),
+                        Visibility(
+                          visible: !profileInfoState.isLoading,
+                          child: FilledButton(
+                            onPressed:
+                                profileInfoState.apiPatchBody().isEmpty
+                                    ? null
+                                    : () async {
+                                      if (_formKey.currentState!.validate()) {
+                                        await context
+                                            .read<ProfileCubit>()
+                                            .updateProfile();
+                                      }
+                                    },
+                            child: Text(context.localizations.update),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -172,6 +172,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Email or Password is empty'**
   String get emailOrPasswordEmpty;
+
+  /// No description provided for @passwordDoesNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Password does not match with confirm password'**
+  String get passwordDoesNotMatch;
+
+  /// No description provided for @firstName.
+  ///
+  /// In en, this message translates to:
+  /// **'First Name'**
+  String get firstName;
+
+  /// No description provided for @lastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Name'**
+  String get lastName;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @registerSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Successful'**
+  String get registerSuccess;
+
+  /// No description provided for @thisFieldIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get thisFieldIsRequired;
+
+  /// No description provided for @registerFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Failed'**
+  String get registerFailed;
+
+  /// No description provided for @accountSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Settings'**
+  String get accountSettings;
+
+  /// No description provided for @personalInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get personalInformation;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// No description provided for @address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get address;
+
+  /// No description provided for @emergencyContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Contact'**
+  String get emergencyContact;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @housing.
+  ///
+  /// In en, this message translates to:
+  /// **'Housing'**
+  String get housing;
+
+  /// No description provided for @listYourSpace.
+  ///
+  /// In en, this message translates to:
+  /// **'List your space'**
+  String get listYourSpace;
+
+  /// No description provided for @paymentsAndPayouts.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments & Payouts'**
+  String get paymentsAndPayouts;
+
+  /// No description provided for @tools.
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get tools;
+
+  /// No description provided for @termAndService.
+  ///
+  /// In en, this message translates to:
+  /// **'Term and Services'**
+  String get termAndService;
+
+  /// No description provided for @updatedSucessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated Successfully'**
+  String get updatedSucessfully;
+
+  /// No description provided for @updateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Failed'**
+  String get updateFailed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -22,20 +22,30 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     getAuthentication();
   }
 
-  void getAuthentication() async {
-    if (state.token.isNotEmpty) {
-      final userResponse = await _restClient.getProfile();
-      if (userResponse.isSuccessful) {
-        final user = User.fromJson(userResponse.body!);
-        emit(state.copyWith(user: user));
+  Future<void> getAuthentication() async {
+    try {
+      if (state.token.isNotEmpty) {
+        final userResponse = await _restClient.getProfile();
+        if (userResponse.isSuccessful) {
+          final user = User.fromJson(userResponse.body!);
+          emit(state.copyWith(user: user));
+        } else {
+          emit(AuthenticationState.initial());
+          await logout();
+        }
       }
-    } else {
+    } catch (e) {
       emit(AuthenticationState.initial());
+      await logout();
     }
   }
 
-  void logout() async {
+  Future<void> logout() async {
     await getIt.get<StorageService>().deleteToken();
     emit(AuthenticationState.initial());
+  }
+
+  void updateUser(User user) {
+    emit(state.copyWith(user: user));
   }
 }

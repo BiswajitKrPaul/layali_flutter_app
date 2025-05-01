@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:layali_flutter_app/common/utils/mixin_utils.dart';
+import 'package:layali_flutter_app/common/utils/extension_utils.dart';
 
 @RoutePage()
 class TripsPage extends StatelessWidget {

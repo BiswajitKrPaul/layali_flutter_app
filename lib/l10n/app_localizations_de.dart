@@ -46,4 +46,67 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get emailOrPasswordEmpty => 'E-Mail oder Passwort ist leer';
+
+  @override
+  String get passwordDoesNotMatch => 'Passwort stimmt nicht mit dem Passwort bestätigen';
+
+  @override
+  String get firstName => 'Vorname';
+
+  @override
+  String get lastName => 'Nachname';
+
+  @override
+  String get confirmPassword => 'Passwort bestätigen';
+
+  @override
+  String get registerSuccess => 'Registrierung war erfolgreich';
+
+  @override
+  String get thisFieldIsRequired => 'Dieses Feld ist erforderlich';
+
+  @override
+  String get registerFailed => 'Registrierung fehlgeschlagen';
+
+  @override
+  String get accountSettings => 'Kontoeinstellungen';
+
+  @override
+  String get personalInformation => 'Persönliche Informationen';
+
+  @override
+  String get edit => 'Bearbeiten';
+
+  @override
+  String get phoneNumber => 'Telefonnummer';
+
+  @override
+  String get address => 'Adresse';
+
+  @override
+  String get emergencyContact => 'Notfallkontakt';
+
+  @override
+  String get update => 'Aktualisieren';
+
+  @override
+  String get housing => 'Unterkunft';
+
+  @override
+  String get listYourSpace => 'Vermiete deinen Platz';
+
+  @override
+  String get paymentsAndPayouts => 'Zahlungen & Auszahlungen';
+
+  @override
+  String get tools => 'Werkzeuge';
+
+  @override
+  String get termAndService => 'Geschäftsbedingungen & Dienstleistungen';
+
+  @override
+  String get updatedSucessfully => 'Aktualisiert erfolgreich';
+
+  @override
+  String get updateFailed => 'Aktualisierung fehlgeschlagen';
 }

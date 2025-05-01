@@ -7,18 +7,19 @@ import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentica
 import 'package:layali_flutter_app/domain/storage_service.dart';
 import 'package:layali_flutter_app/injection.dart';
 import 'package:layali_flutter_app/l10n/app_localizations.dart';
-
-import 'theme.dart';
+import 'package:layali_flutter_app/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
-  final authToken = await getIt.get<StorageService>().getToken() ?? "";
+  final authToken = await getIt.get<StorageService>().getToken() ?? '';
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => getIt.get<AppLanguageCubit>()..getAllLanguages(),
+          create: (context) {
+            return getIt.get<AppLanguageCubit>()..getAllLanguages();
+          },
         ),
         BlocProvider(
           lazy: false,
@@ -40,12 +41,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
       routerConfig: getIt.get<AppRouter>().config(),
       locale: Locale.fromSubtags(
         languageCode: context.watch<AppLanguageCubit>().state.index,
       ),
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate, // Add this line
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

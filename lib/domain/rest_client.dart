@@ -25,10 +25,7 @@ class RestProtectedService {
     converter: const JsonConverter(),
     errorConverter: const JsonConverter(),
     services: [UserService.create()],
-    interceptors: [
-      ApplyHeaderInterceptor(),
-      PrettyChopperLogger(level: Level.body),
-    ],
+    interceptors: [ApplyHeaderInterceptor(), PrettyChopperLogger()],
   );
   ChopperClient get client => _client;
 }

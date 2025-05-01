@@ -20,6 +20,7 @@ dependencies:
     sdk: flutter
   flutter_secure_storage: ^9.2.4
   flutter_svg: ^2.1.0
+  form_validator: ^2.1.1
   freezed_annotation: ^3.0.0
   get_it: ^8.0.3
   google_fonts: ^6.2.1
@@ -41,6 +42,7 @@ dev_dependencies:
   envied_generator: ^1.1.1
   chopper_generator: ^8.1.0
   flutter_gen_runner: ^5.10.0
+  very_good_analysis: ^7.0.0
 
 
 flutter:

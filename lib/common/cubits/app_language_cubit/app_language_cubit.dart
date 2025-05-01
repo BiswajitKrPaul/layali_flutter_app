@@ -9,7 +9,7 @@ part 'app_language_state.dart';
 
 @lazySingleton
 class AppLanguageCubit extends Cubit<AppLanguageState> {
-  AppLanguageCubit() : super(AppLanguageState());
+  AppLanguageCubit() : super(const AppLanguageState());
 
   void getAllLanguages() {
     emit(

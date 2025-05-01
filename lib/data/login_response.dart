@@ -11,16 +11,16 @@ part 'login_response.freezed.dart';
 part 'login_response.g.dart';
 
 LoginResponse loginResponseFromJson(String str) =>
-    LoginResponse.fromJson(json.decode(str));
+    LoginResponse.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
 
 @freezed
 abstract class LoginResponse with _$LoginResponse {
   const factory LoginResponse({
-    @JsonKey(name: "access_token") required String accessToken,
-    @JsonKey(name: "token_type") required String tokenType,
-    @JsonKey(name: "user") required User user,
+    @JsonKey(name: 'access_token') required String accessToken,
+    @JsonKey(name: 'token_type') required String tokenType,
+    @JsonKey(name: 'user') required User user,
   }) = _LoginResponse;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
