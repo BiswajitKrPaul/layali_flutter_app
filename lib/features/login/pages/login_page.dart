@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart' show AutoRouteWrapper, AutoRouterX;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:layali_flutter_app/app_router.gr.dart';
 import 'package:layali_flutter_app/common/cubits/app_language_cubit/app_language_cubit.dart';
 import 'package:layali_flutter_app/common/utils/extension_utils.dart';
@@ -53,10 +52,7 @@ class LoginPage extends StatelessWidget implements AutoRouteWrapper {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 16,
                 children: [
-                  SizedBox(
-                    height: 250,
-                    child: SvgPicture.asset(Assets.svg.login),
-                  ),
+                  SizedBox(height: 250, child: Assets.images.logo.image()),
                   TextField(
                     onChanged: context.read<LoginCubit>().setEmail,
                     decoration: InputDecoration(

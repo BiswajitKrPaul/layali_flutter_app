@@ -109,4 +109,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get updateFailed => 'Aktualisierung fehlgeschlagen';
+
+  @override
+  String get camera => 'Kamera';
+
+  @override
+  String get gallery => 'Galerie';
+
+  @override
+  String get noImageSelected => 'Keine Bild ausgewählt';
+
+  @override
+  String get uploadImage => 'Bild hochladen';
+
+  @override
+  String get uploading => 'Bild wird hochgeladen';
+
+  @override
+  String get uploadFailed => 'Bild hochladen fehlgeschlagen';
+
+  @override
+  String get uploadSuccess => 'Bild erfolgreich hochgeladen';
+
+  @override
+  String get editProfilePic => 'Profilbild bearbeiten';
+
+  @override
+  String get takePhoto => 'Foto aufnehmen';
+
+  @override
+  String get choosePhoto => 'Foto auswählen';
 }

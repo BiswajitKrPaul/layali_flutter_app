@@ -1,10 +1,14 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentication_cubit.dart';
+import 'package:layali_flutter_app/common/utils/constants.dart';
 import 'package:layali_flutter_app/common/utils/extension_utils.dart';
 import 'package:layali_flutter_app/features/profile_information/cubits/profile_cubit/profile_cubit.dart';
+import 'package:layali_flutter_app/features/profile_information/cubits/profile_image_cubit/profile_image_cubit.dart';
+import 'package:layali_flutter_app/features/profile_information/widgets/image_picker_bottom_sheet_widget.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -14,11 +18,17 @@ class ProfileInfoPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create:
-          (context) =>
-              ProfileCubit()
-                ..setUserData(context.read<AuthenticationCubit>().state.user!),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create:
+              (context) =>
+                  ProfileCubit()..setUserData(
+                    context.read<AuthenticationCubit>().state.user!,
+                  ),
+        ),
+        BlocProvider(create: (context) => ProfileImageCubit()),
+      ],
       child: this,
     );
   }
@@ -75,15 +85,64 @@ class ProfileInfoPage extends StatelessWidget implements AutoRouteWrapper {
                     child: Column(
                       spacing: 24,
                       children: [
-                        const CircleAvatar(
-                          radius: 68,
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: Icon(Icons.camera_alt, size: 36),
-                              ),
-                            ],
+                        BlocListener<ProfileImageCubit, ProfileImageState>(
+                          listener: (context, state) {
+                            if (state.hasError) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    context.localizations.noImageSelected,
+                                  ),
+                                ),
+                              );
+                            } else if (state.isDone) {
+                              context.read<ProfileCubit>().uploadProfileImage(
+                                state.imageUrl,
+                              );
+                            }
+                          },
+                          child: SizedBox(
+                            width: 150,
+                            height: 160,
+                            child: Stack(
+                              children: [
+                                CachedNetworkImage(
+                                  width: 150,
+                                  height: 150,
+                                  imageUrl: profileInfoState.imageUrl,
+                                  imageBuilder:
+                                      (context, imageProvider) => Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                  errorWidget:
+                                      (context, url, error) =>
+                                          const CircleAvatar(
+                                            radius: 68,
+                                            backgroundImage: NetworkImage(
+                                              Constants.defaultImage,
+                                            ),
+                                          ),
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      showImagePickerBottomSheet(context);
+                                    },
+                                    icon: const Icon(
+                                      Icons.camera_alt,
+                                      size: 36,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         TextFormField(
@@ -179,6 +238,21 @@ class ProfileInfoPage extends StatelessWidget implements AutoRouteWrapper {
           ),
         ),
       ),
+    );
+  }
+
+  Future<Widget?> showImagePickerBottomSheet(BuildContext context) {
+    final blocVale = context.read<ProfileImageCubit>();
+    return showModalBottomSheet<Widget>(
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainerLowest,
+      showDragHandle: true,
+      context: context,
+      builder: (context) {
+        return BlocProvider.value(
+          value: blocVale,
+          child: const ImagePickerBottomSheetWidget(),
+        );
+      },
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:layali_flutter_app/common/utils/extension_utils.dart';
 import 'package:layali_flutter_app/features/register/cubits/register_cubit/register_cubit.dart';
+import 'package:layali_flutter_app/gen/assets.gen.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -55,6 +56,7 @@ class RegisterPage extends StatelessWidget implements AutoRouteWrapper {
                   mainAxisAlignment: MainAxisAlignment.center,
                   spacing: 16,
                   children: [
+                    SizedBox(height: 250, child: Assets.images.logo.image()),
                     TextFormField(
                       onChanged: context.read<RegisterCubit>().setFirstName,
                       keyboardType: TextInputType.name,

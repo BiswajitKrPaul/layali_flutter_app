@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:http/http.dart';
 import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:layali_flutter_app/data/error_response.dart';
 import 'package:layali_flutter_app/data/user.dart';
@@ -83,6 +84,27 @@ class ProfileCubit extends Cubit<ProfileState> {
       }
     } catch (e) {
       emit(state.copyWith(hasError: true, isLoading: false));
+    }
+  }
+
+  Future<void> uploadProfileImage(String imageUrl) async {
+    softReset();
+    emit(state.copyWith(isLoading: true));
+    final imgFile = await MultipartFile.fromPath('file', imageUrl);
+    final response = await _restClient.uploadProfileImage(imgFile);
+    if (response.isSuccessful) {
+      emit(state.copyWith(isLoading: false, isDone: true));
+    } else {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          hasError: true,
+          errorMessage:
+              ErrorResponse.fromJson(
+                (response.error as Map<String, dynamic>?) ?? {},
+              ).detail,
+        ),
+      );
     }
   }
 }

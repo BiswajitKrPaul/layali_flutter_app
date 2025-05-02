@@ -1,4 +1,5 @@
 import 'package:chopper/chopper.dart';
+import 'package:http/http.dart' show MultipartFile;
 
 part 'user_service.chopper.dart';
 
@@ -14,5 +15,14 @@ abstract class UserService extends ChopperService {
   @PATCH(path: '/update-user', optionalBody: true)
   Future<Response<Map<String, dynamic>>> updateProfile(
     @Body() Map<String, dynamic> body,
+  );
+
+  @POST(
+    path: '/upload-profile-image',
+    headers: {'Content-Type': 'multipart/form-data'},
+  )
+  @multipart
+  Future<Response<Map<String, dynamic>>> uploadProfileImage(
+    @PartFile('file') MultipartFile filePath,
   );
 }

@@ -109,4 +109,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updateFailed => 'Update Failed';
+
+  @override
+  String get camera => 'Camera';
+
+  @override
+  String get gallery => 'Gallery';
+
+  @override
+  String get noImageSelected => 'No Image Selected';
+
+  @override
+  String get uploadImage => 'Upload Image';
+
+  @override
+  String get uploading => 'Uploading profile image';
+
+  @override
+  String get uploadFailed => 'Upload Failed';
+
+  @override
+  String get uploadSuccess => 'Upload Success';
+
+  @override
+  String get editProfilePic => 'Edit Profile Picture';
+
+  @override
+  String get takePhoto => 'Take Photo';
+
+  @override
+  String get choosePhoto => 'Choose Photo';
 }
