@@ -64,7 +64,7 @@ class ProfileInfoPage extends StatelessWidget implements AutoRouteWrapper {
                   if (state.isDone) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(context.localizations.updatedSucessfully),
+                        content: Text(context.localizations.profilePicUpdated),
                       ),
                     );
                   } else if (state.hasError) {
@@ -124,9 +124,10 @@ class ProfileInfoPage extends StatelessWidget implements AutoRouteWrapper {
                                       (context, url, error) =>
                                           const CircleAvatar(
                                             radius: 68,
-                                            backgroundImage: NetworkImage(
-                                              Constants.defaultImage,
-                                            ),
+                                            backgroundImage:
+                                                CachedNetworkImageProvider(
+                                                  Constants.defaultImage,
+                                                ),
                                           ),
                                 ),
                                 Align(

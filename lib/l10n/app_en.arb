@@ -88,5 +88,7 @@
     "takePhoto":"Take Photo",
     "@takePhoto": {},
     "choosePhoto":"Choose Photo",
-    "@choosePhoto": {}
+    "@choosePhoto": {},
+    "profilePicUpdated":"Profile picture uploaded sucessfully",
+    "@profilePicUpdated": {}
 }

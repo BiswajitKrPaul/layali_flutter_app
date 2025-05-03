@@ -87,5 +87,7 @@
     "takePhoto": "Foto aufnehmen",
     "@takePhoto": {},
     "choosePhoto": "Foto auswählen",
-    "@choosePhoto": {}
+    "@choosePhoto": {},
+    "profilePicUpdated": "Profilbild erfolgreich hochgeladen",
+    "@profilePicUpdated": {}
 }

@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:http/http.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:layali_flutter_app/data/error_response.dart';
 import 'package:layali_flutter_app/data/user.dart';
@@ -27,6 +30,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         phoneNumber: user.phoneNumber ?? '',
         address: user.address ?? '',
         emergencyContact: user.emergencyContact ?? '',
+        imageUrl: user.profileImage ?? '',
       ),
     );
   }
@@ -90,7 +94,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> uploadProfileImage(String imageUrl) async {
     softReset();
     emit(state.copyWith(isLoading: true));
-    final imgFile = await MultipartFile.fromPath('file', imageUrl);
+    final file = File(imageUrl);
+    final imgFile = await MultipartFile.fromPath(
+      'file',
+      file.path,
+      contentType: MediaType('image', file.path.split('.').last),
+    );
     final response = await _restClient.uploadProfileImage(imgFile);
     if (response.isSuccessful) {
       emit(state.copyWith(isLoading: false, isDone: true));

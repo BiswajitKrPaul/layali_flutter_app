@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:layali_flutter_app/common/utils/extension_utils.dart';
+import 'package:layali_flutter_app/features/profile_information/cubits/profile_image_cubit/profile_image_cubit.dart';
 
 class ImagePickerBottomSheetWidget extends StatelessWidget {
   const ImagePickerBottomSheetWidget({super.key});
@@ -55,9 +57,9 @@ class ImagePickerBottomSheetWidget extends StatelessWidget {
                       trailing: const Icon(Icons.camera_alt),
                       onTap: () async {
                         context.router.pop();
-                        // await context
-                        //     .read<ProfileImageCubit>()
-                        //     .pickImageFromCamera();
+                        await context
+                            .read<ProfileImageCubit>()
+                            .pickImageFromCamera();
                       },
                     ),
                     const Divider(),
@@ -66,9 +68,9 @@ class ImagePickerBottomSheetWidget extends StatelessWidget {
                       trailing: const Icon(Icons.photo),
                       onTap: () {
                         context.router.pop();
-                        // context
-                        //     .read<ProfileImageCubit>()
-                        //     .pickImageFromGallery();
+                        context
+                            .read<ProfileImageCubit>()
+                            .pickImageFromGallery();
                       },
                     ),
                   ],

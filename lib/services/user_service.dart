@@ -17,11 +17,8 @@ abstract class UserService extends ChopperService {
     @Body() Map<String, dynamic> body,
   );
 
-  @POST(
-    path: '/upload-profile-image',
-    headers: {'Content-Type': 'multipart/form-data'},
-  )
-  @multipart
+  @POST(path: '/upload-profile-image')
+  @Multipart()
   Future<Response<Map<String, dynamic>>> uploadProfileImage(
     @PartFile('file') MultipartFile filePath,
   );

@@ -358,6 +358,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose Photo'**
   String get choosePhoto;
+
+  /// No description provided for @profilePicUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile picture uploaded sucessfully'**
+  String get profilePicUpdated;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

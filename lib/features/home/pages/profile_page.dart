@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:layali_flutter_app/app_router.gr.dart';
 import 'package:layali_flutter_app/common/cubits/app_language_cubit/app_language_cubit.dart';
 import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentication_cubit.dart';
+import 'package:layali_flutter_app/common/utils/constants.dart';
 import 'package:layali_flutter_app/common/utils/extension_utils.dart';
 
 @RoutePage()
@@ -24,17 +26,45 @@ class ProfilePage extends StatelessWidget {
             ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               minVerticalPadding: 0,
-              onTap: () {},
               title: Text(
                 context.read<AuthenticationCubit>().state.user!.firstName,
               ),
               subtitle: Text(
                 context.read<AuthenticationCubit>().state.user!.email,
               ),
-              leading: const SizedBox(
+              leading: SizedBox(
                 width: 48,
-                child: CircleAvatar(radius: 100),
+                height: 48,
+                child: CachedNetworkImage(
+                  width: 150,
+                  height: 150,
+                  imageUrl:
+                      context
+                          .read<AuthenticationCubit>()
+                          .state
+                          .user
+                          ?.profileImage ??
+                      '',
+                  imageBuilder:
+                      (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                  errorWidget:
+                      (context, url, error) => const CircleAvatar(
+                        radius: 68,
+                        backgroundImage: CachedNetworkImageProvider(
+                          Constants.defaultImage,
+                        ),
+                      ),
+                ),
               ),
+              onTap: () => context.router.push(const ProfileInfoPageRoute()),
             ),
 
             // Account settings section

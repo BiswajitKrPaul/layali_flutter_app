@@ -139,4 +139,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get choosePhoto => 'Foto auswählen';
+
+  @override
+  String get profilePicUpdated => 'Profilbild erfolgreich hochgeladen';
 }
