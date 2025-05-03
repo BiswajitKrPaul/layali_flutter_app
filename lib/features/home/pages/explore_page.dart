@@ -1,8 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:layali_flutter_app/common/utils/extension_utils.dart';
+import 'package:layali_flutter_app/features/home/data/property_data.dart';
+import 'package:layali_flutter_app/features/home/widgets/property_card.dart';
 
 @RoutePage()
 class ExplorePage extends StatelessWidget {
@@ -15,8 +15,11 @@ class ExplorePage extends StatelessWidget {
         title: Text(context.localizations.explore),
         centerTitle: true,
       ),
-      body: Center(
-        child: Text(context.watch<AuthenticationCubit>().state.toString()),
+      body: ListView.separated(
+        itemBuilder:
+            (context, index) => PropertyCard(property: properties[index]),
+        separatorBuilder: (context, index) => const Divider(),
+        itemCount: properties.length,
       ),
     );
   }

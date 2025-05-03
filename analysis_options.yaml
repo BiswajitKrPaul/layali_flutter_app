@@ -5,6 +5,8 @@ linter:
     public_member_api_docs: false
 
 analyzer:
+  exclude:
+    - lib/**.*.dart
   errors:
     invalid_annotation_target: ignore
     avoid_catches_without_on_clauses: ignore
