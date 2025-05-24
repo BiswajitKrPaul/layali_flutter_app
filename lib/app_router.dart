@@ -21,9 +21,23 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: InboxPageRoute.page),
         AutoRoute(page: ProfilePageRoute.page),
       ],
-      guards: [AuthGuard()],
     ),
-    AutoRoute(page: ProfileInfoPageRoute.page, guards: [AuthGuard()]),
+    AutoRoute(page: ProfileInfoPageRoute.page),
+  ];
+
+  @override
+  List<AutoRouteGuard> get guards => [
+    AutoRouteGuard.simple((resolver, router) {
+      final isAuthenticated =
+          getIt.get<AuthenticationCubit>().state.isAuthenticated;
+      if (isAuthenticated ||
+          resolver.routeName == LoginPageRoute.name ||
+          resolver.routeName == RegisterPageRoute.name) {
+        resolver.next();
+      } else {
+        resolver.redirectUntil(const LoginPageRoute());
+      }
+    }),
   ];
 }
 
