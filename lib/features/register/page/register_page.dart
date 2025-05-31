@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:layali_flutter_app/app_router.gr.dart';
 import 'package:layali_flutter_app/common/utils/extension_utils.dart';
 import 'package:layali_flutter_app/features/register/cubits/register_cubit/register_cubit.dart';
 import 'package:layali_flutter_app/gen/assets.gen.dart';
@@ -33,7 +34,7 @@ class RegisterPage extends StatelessWidget implements AutoRouteWrapper {
             child: BlocConsumer<RegisterCubit, RegisterState>(
               listener: (context, state) {
                 if (state.isDone) {
-                  context.router.pop();
+                  context.router.replaceAll(const [HomePageRoute()]);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(context.localizations.registerSuccess),
