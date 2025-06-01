@@ -1,3 +1,5 @@
 {
-    "workbench.colorTheme": "One Monokai"
+  "workbench.colorTheme": "One Monokai",
+  "dart.flutterSdkPath": ".fvm/versions/stable",
+  "postman.settings.dotenv-detection-notification-visibility": false
 }

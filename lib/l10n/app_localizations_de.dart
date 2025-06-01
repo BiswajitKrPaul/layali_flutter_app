@@ -24,7 +24,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get loginSuccess => 'Anmeldung war erfolgreich';
 
   @override
-  String get invalidLogin => 'Ungültige Anmeldedaten. Bitte überprüfen Sie Ihre Eingaben.';
+  String get invalidLogin =>
+      'Ungültige Anmeldedaten. Bitte überprüfen Sie Ihre Eingaben.';
 
   @override
   String get explore => 'Entdecken';
@@ -48,7 +49,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get emailOrPasswordEmpty => 'E-Mail oder Passwort ist leer';
 
   @override
-  String get passwordDoesNotMatch => 'Passwort stimmt nicht mit dem Passwort bestätigen';
+  String get passwordDoesNotMatch =>
+      'Passwort stimmt nicht mit dem Passwort bestätigen';
 
   @override
   String get firstName => 'Vorname';

@@ -47,3 +47,6 @@ app.*.map.json
 lib/env.g.dart
 *.*.dart
 Abfinal-release_27_03.apk
+
+# FVM Version Cache
+.fvm/
