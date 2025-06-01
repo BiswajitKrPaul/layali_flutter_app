@@ -48,7 +48,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailOrPasswordEmpty => 'Email or Password is empty';
 
   @override
-  String get passwordDoesNotMatch => 'Password does not match with confirm password';
+  String get passwordDoesNotMatch =>
+      'Password does not match with confirm password';
 
   @override
   String get firstName => 'First Name';
