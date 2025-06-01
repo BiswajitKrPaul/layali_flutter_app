@@ -33,6 +33,7 @@ dependencies:
   injectable: ^2.5.0
   intl: ^0.20.2
   json_annotation: ^4.9.0
+  page_view_dot_indicator: ^2.3.0
   pretty_chopper_logger: ^1.2.2
   recase: ^4.1.0
 

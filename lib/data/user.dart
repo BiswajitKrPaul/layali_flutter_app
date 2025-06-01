@@ -21,7 +21,7 @@ abstract class User with _$User {
     @JsonKey(name: 'first_name') required String firstName,
     @JsonKey(name: 'last_name') required String lastName,
     @JsonKey(name: 'email') required String email,
-    @JsonKey(name: 'joined_date') required DateTime joinedDate,
+    @JsonKey(name: 'joined_date') DateTime? joinedDate,
     @JsonKey(name: 'address') String? address,
     @JsonKey(name: 'phone_number') String? phoneNumber,
     @JsonKey(name: 'emergency_contact') String? emergencyContact,
