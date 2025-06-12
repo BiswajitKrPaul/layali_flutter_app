@@ -35,33 +35,31 @@ class ProfilePage extends StatelessWidget {
               leading: SizedBox(
                 width: 48,
                 height: 48,
-                child: CachedNetworkImage(
-                  width: 150,
-                  height: 150,
-                  imageUrl:
-                      context
-                          .read<AuthenticationCubit>()
-                          .state
-                          .user
-                          ?.profileImage ??
-                      '',
-                  imageBuilder:
-                      (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
+                child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
+                  builder: (context, state) {
+                    return CachedNetworkImage(
+                      width: 150,
+                      height: 150,
+                      imageUrl: state.user?.profileImage ?? '',
+                      imageBuilder:
+                          (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                  errorWidget:
-                      (context, url, error) => const CircleAvatar(
-                        radius: 68,
-                        backgroundImage: CachedNetworkImageProvider(
-                          Constants.defaultImage,
-                        ),
-                      ),
+                      errorWidget:
+                          (context, url, error) => const CircleAvatar(
+                            radius: 68,
+                            backgroundImage: CachedNetworkImageProvider(
+                              Constants.defaultImage,
+                            ),
+                          ),
+                    );
+                  },
                 ),
               ),
               onTap: () => context.router.push(const ProfileInfoPageRoute()),

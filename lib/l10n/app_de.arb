@@ -89,5 +89,7 @@
     "choosePhoto": "Foto auswählen",
     "@choosePhoto": {},
     "profilePicUpdated": "Profilbild erfolgreich hochgeladen",
-    "@profilePicUpdated": {}
+    "@profilePicUpdated": {},
+    "startYourSearch":"Starten Sie Ihre Suche",
+    "@startYourSearch": {}
 }

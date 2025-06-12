@@ -23,6 +23,7 @@ class AppRouter extends RootStackRouter {
       ],
     ),
     AutoRoute(page: ProfileInfoPageRoute.page),
+    AutoRoute(page: SearchPageRoute.page),
   ];
 
   @override

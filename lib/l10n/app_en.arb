@@ -90,5 +90,7 @@
     "choosePhoto":"Choose Photo",
     "@choosePhoto": {},
     "profilePicUpdated":"Profile picture uploaded sucessfully",
-    "@profilePicUpdated": {}
+    "@profilePicUpdated": {},
+    "startYourSearch":"Start your search",
+    "@startYourSearch": {}
 }

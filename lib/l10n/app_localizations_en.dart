@@ -143,4 +143,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profilePicUpdated => 'Profile picture uploaded sucessfully';
+
+  @override
+  String get startYourSearch => 'Start your search';
 }

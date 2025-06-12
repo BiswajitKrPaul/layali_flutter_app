@@ -1,6 +1,7 @@
 import 'package:chopper/chopper.dart';
 import 'package:injectable/injectable.dart';
 import 'package:layali_flutter_app/domain/apply_header_interceptors.dart';
+import 'package:layali_flutter_app/domain/token_expire_interceptor.dart';
 import 'package:layali_flutter_app/env.dart';
 import 'package:layali_flutter_app/services/auth_service.dart';
 import 'package:layali_flutter_app/services/user_service.dart';
@@ -25,7 +26,11 @@ class RestProtectedService {
     converter: const JsonConverter(),
     errorConverter: const JsonConverter(),
     services: [UserService.create()],
-    interceptors: [ApplyHeaderInterceptor(), PrettyChopperLogger()],
+    interceptors: [
+      ApplyHeaderInterceptor(),
+      PrettyChopperLogger(),
+      TokenExpireInterceptor(),
+    ],
   );
   ChopperClient get client => _client;
 }

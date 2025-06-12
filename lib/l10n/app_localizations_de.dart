@@ -144,4 +144,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get profilePicUpdated => 'Profilbild erfolgreich hochgeladen';
+
+  @override
+  String get startYourSearch => 'Starten Sie Ihre Suche';
 }

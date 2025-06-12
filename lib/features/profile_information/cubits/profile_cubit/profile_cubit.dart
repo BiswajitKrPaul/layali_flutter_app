@@ -71,7 +71,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       final response = await _restClient.updateProfile(state.apiPatchBody());
       if (response.isSuccessful) {
         final user = User.fromJson(response.body!);
-        emit(state.copyWith(user: user));
+        emit(state.copyWith(user: user, imageUrl: user.profileImage ?? ''));
         getIt.get<AuthenticationCubit>().updateUser(user);
         emit(state.copyWith(isDone: true, isLoading: false));
       } else {
@@ -101,7 +101,10 @@ class ProfileCubit extends Cubit<ProfileState> {
       contentType: MediaType('image', file.path.split('.').last),
     );
     final response = await _restClient.uploadProfileImage(imgFile);
-    if (response.isSuccessful) {
+    if (response.isSuccessful && response.body != null) {
+      final user = User.fromJson(response.body!);
+      emit(state.copyWith(user: user, imageUrl: user.profileImage ?? ''));
+      await getIt.get<AuthenticationCubit>().getAuthentication();
       emit(state.copyWith(isLoading: false, isDone: true));
     } else {
       emit(

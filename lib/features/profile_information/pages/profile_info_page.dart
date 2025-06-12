@@ -9,6 +9,7 @@ import 'package:layali_flutter_app/common/utils/extension_utils.dart';
 import 'package:layali_flutter_app/features/profile_information/cubits/profile_cubit/profile_cubit.dart';
 import 'package:layali_flutter_app/features/profile_information/cubits/profile_image_cubit/profile_image_cubit.dart';
 import 'package:layali_flutter_app/features/profile_information/widgets/image_picker_bottom_sheet_widget.dart';
+import 'package:layali_flutter_app/injection.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -23,9 +24,8 @@ class ProfileInfoPage extends StatelessWidget implements AutoRouteWrapper {
         BlocProvider(
           create:
               (context) =>
-                  ProfileCubit()..setUserData(
-                    context.read<AuthenticationCubit>().state.user!,
-                  ),
+                  ProfileCubit()
+                    ..setUserData(getIt.get<AuthenticationCubit>().state.user!),
         ),
         BlocProvider(create: (context) => ProfileImageCubit()),
       ],

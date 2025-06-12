@@ -367,6 +367,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile picture uploaded sucessfully'**
   String get profilePicUpdated;
+
+  /// No description provided for @startYourSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Start your search'**
+  String get startYourSearch;
 }
 
 class _AppLocalizationsDelegate
