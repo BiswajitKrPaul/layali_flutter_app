@@ -9,6 +9,9 @@ abstract class Env {
   @EnviedField(varName: 'TOKEN_KEY')
   static final String tokenKey = _Env.tokenKey;
 
+  @EnviedField(varName: 'GOOGLE_MAP_API_KEY')
+  static final String googleMapApiKey = _Env.googleMapApiKey;
+
   // @EnviedField(varName: 'LOGIN_PATH')
   // static final String loginPath = _Env.loginPath;
 
