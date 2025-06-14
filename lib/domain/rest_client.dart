@@ -29,8 +29,8 @@ class RestProtectedService {
     services: [UserService.create(), PropertyService.create()],
     interceptors: [
       ApplyHeaderInterceptor(),
-      PrettyChopperLogger(),
       TokenExpireInterceptor(),
+      PrettyChopperLogger(),
     ],
   );
   ChopperClient get client => _client;

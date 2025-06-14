@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:layali_flutter_app/app_router.gr.dart';
 import 'package:layali_flutter_app/common/cubits/app_language_cubit/app_language_cubit.dart';
 import 'package:layali_flutter_app/features/home/data/listing_property_model.dart';
 import 'package:layali_flutter_app/injection.dart';
@@ -39,95 +41,99 @@ class _PropertyCardState extends State<PropertyCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Card(
-            child: Stack(
-              children: [
-                // Image Carousel
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 400,
-                    viewportFraction: 1,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _currentImageIndex = index;
-                      });
-                    },
-                  ),
-                  items:
-                      imgList.map((url) {
-                        return CachedNetworkImage(
-                          imageUrl: url,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          placeholder:
-                              (context, url) => Container(
-                                color: Colors.grey[200],
-                                child: const Center(
-                                  child: CircularProgressIndicator(),
+    return InkWell(
+      onTap: () => context.router.push(const ListingDetailRoute()),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Card(
+              child: Stack(
+                children: [
+                  // Image Carousel
+                  CarouselSlider(
+                    options: CarouselOptions(
+                      height: 400,
+                      viewportFraction: 1,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          _currentImageIndex = index;
+                        });
+                      },
+                    ),
+                    items:
+                        imgList.map((url) {
+                          return CachedNetworkImage(
+                            imageUrl: url,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            placeholder:
+                                (context, url) => Container(
+                                  color: Colors.grey[200],
+                                  child: const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
                                 ),
-                              ),
-                          errorWidget:
-                              (context, url, error) => const Icon(Icons.error),
-                        );
-                      }).toList(),
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: _buildDotIndicator(
-                      imgList.length,
-                      _currentImageIndex,
+                            errorWidget:
+                                (context, url, error) =>
+                                    const Icon(Icons.error),
+                          );
+                        }).toList(),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: _buildDotIndicator(
+                        imgList.length,
+                        _currentImageIndex,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          const Gap(8),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(
-              widget.property.location.city,
-              style: Theme.of(
-                context,
-              ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w500),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          const Gap(4),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(
-              widget.property.location.country.name,
-              style: Theme.of(context).textTheme.labelMedium,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          const Gap(4),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(
-              NumberFormat.currency(
-                locale: getIt.get<AppLanguageCubit>().state.index,
-              ).format(widget.property.pricePerNight),
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                decoration: TextDecoration.underline,
-                fontWeight: FontWeight.bold,
+                ],
               ),
-              maxLines: 1,
             ),
-          ),
-        ],
+            const Gap(8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                widget.property.location.city,
+                style: Theme.of(
+                  context,
+                ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w500),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const Gap(4),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                widget.property.location.country.name,
+                style: Theme.of(context).textTheme.labelMedium,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const Gap(4),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                NumberFormat.currency(
+                  locale: getIt.get<AppLanguageCubit>().state.index,
+                ).format(widget.property.pricePerNight),
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  decoration: TextDecoration.underline,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

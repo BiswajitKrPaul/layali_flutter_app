@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:layali_flutter_app/app_router.gr.dart';
 import 'package:layali_flutter_app/common/utils/extension_utils.dart';
 import 'package:layali_flutter_app/features/home/cubits/listing_property_cubit/listing_propety_cubit.dart';
-import 'package:layali_flutter_app/features/search_listing/cubits/place_search_cubit/place_search_cubit.dart';
+import 'package:layali_flutter_app/features/listing/cubits/place_search_cubit/place_search_cubit.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({super.key});

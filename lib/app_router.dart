@@ -24,6 +24,7 @@ class AppRouter extends RootStackRouter {
     ),
     AutoRoute(page: ProfileInfoPageRoute.page),
     AutoRoute(page: SearchPageRoute.page),
+    AutoRoute(page: ListingDetailRoute.page),
   ];
 
   @override
@@ -42,15 +43,15 @@ class AppRouter extends RootStackRouter {
   ];
 }
 
-class AuthGuard extends AutoRouteGuard {
-  @override
-  void onNavigation(NavigationResolver resolver, StackRouter router) {
-    final isAuthenticated =
-        getIt.get<AuthenticationCubit>().state.isAuthenticated;
-    if (isAuthenticated) {
-      resolver.next();
-    } else {
-      resolver.redirectUntil(const LoginPageRoute());
-    }
-  }
-}
+// class AuthGuard extends AutoRouteGuard {
+//   @override
+//   void onNavigation(NavigationResolver resolver, StackRouter router) {
+//     final isAuthenticated =
+//         getIt.get<AuthenticationCubit>().state.isAuthenticated;
+//     if (isAuthenticated) {
+//       resolver.next();
+//     } else {
+//       resolver.redirectUntil(const LoginPageRoute());
+//     }
+//   }
+// }
