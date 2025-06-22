@@ -25,6 +25,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: ProfileInfoPageRoute.page),
     AutoRoute(page: SearchPageRoute.page),
     AutoRoute(page: ListingDetailRoute.page),
+    AutoRoute(page: ListBookingPageRoute.page),
   ];
 
   @override

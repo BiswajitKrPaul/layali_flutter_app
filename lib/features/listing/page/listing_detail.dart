@@ -87,7 +87,7 @@ class _ImageBehindListScreenState extends State<ImageBehindListScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      physics: const AlwaysScrollableScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       slivers: [
         SliverAppBar(
           leading: IconButton.filledTonal(
@@ -468,7 +468,7 @@ class _ImageBehindListScreenState extends State<ImageBehindListScreen> {
                     ),
                   ],
                 ),
-                const Gap(140),
+                const Gap(120),
               ],
             ),
           ),

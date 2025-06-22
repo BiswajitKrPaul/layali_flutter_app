@@ -3,11 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:intl/intl.dart';
 import 'package:layali_flutter_app/app_router.gr.dart';
-import 'package:layali_flutter_app/common/cubits/app_language_cubit/app_language_cubit.dart';
 import 'package:layali_flutter_app/features/home/data/listing_property_model.dart';
-import 'package:layali_flutter_app/injection.dart';
 
 class PropertyCard extends StatefulWidget {
   const PropertyCard({required this.property, super.key});
@@ -125,9 +122,7 @@ class _PropertyCardState extends State<PropertyCard> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-                NumberFormat.currency(
-                  locale: getIt.get<AppLanguageCubit>().state.index,
-                ).format(widget.property.pricePerNight),
+                '€ ${widget.property.pricePerNight.toStringAsFixed(2)}',
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   decoration: TextDecoration.underline,
                   fontWeight: FontWeight.bold,
