@@ -9,33 +9,46 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'listing_property_model.freezed.dart';
 part 'listing_property_model.g.dart';
 
-String listingPropertyModelToJson(List<ListingPropertyModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+ListingPropertyModel listingPropertyModelFromJson(String str) =>
+    ListingPropertyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String listingPropertyModelToJson(ListingPropertyModel data) =>
+    json.encode(data.toJson());
 
 @freezed
 abstract class ListingPropertyModel with _$ListingPropertyModel {
   const factory ListingPropertyModel({
+    @JsonKey(name: 'page') required int page,
+    @JsonKey(name: 'limit') required int limit,
+    @JsonKey(name: 'total') required int total,
+    @JsonKey(name: 'results') required List<Property> results,
+  }) = _ListingPropertyModel;
+
+  factory ListingPropertyModel.fromJson(Map<String, dynamic> json) =>
+      _$ListingPropertyModelFromJson(json);
+}
+
+@freezed
+abstract class Property with _$Property {
+  const factory Property({
     @JsonKey(name: 'id') required String id,
-    @JsonKey(name: 'user_id') required String userId,
     @JsonKey(name: 'host') required Host host,
     @JsonKey(name: 'title') required String title,
     @JsonKey(name: 'description') required String description,
     @JsonKey(name: 'listing_type') required String listingType,
     @JsonKey(name: 'property_type') required String propertyType,
     @JsonKey(name: 'max_guests') required int maxGuests,
-    @JsonKey(name: 'bedrooms') required int bedrooms,
-    @JsonKey(name: 'beds') required int beds,
-    @JsonKey(name: 'bathrooms') required int bathrooms,
+    @JsonKey(name: 'details') required Details details,
     @JsonKey(name: 'price_per_night') required int pricePerNight,
     @JsonKey(name: 'availability') required List<Availability> availability,
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'location') required Location location,
     @JsonKey(name: 'images') required List<Image> images,
     @JsonKey(name: 'amenities') required List<String> amenities,
-  }) = _ListingPropertyModel;
+  }) = _Property;
 
-  factory ListingPropertyModel.fromJson(Map<String, dynamic> json) =>
-      _$ListingPropertyModelFromJson(json);
+  factory Property.fromJson(Map<String, dynamic> json) =>
+      _$PropertyFromJson(json);
 }
 
 @freezed
@@ -48,6 +61,18 @@ abstract class Availability with _$Availability {
 
   factory Availability.fromJson(Map<String, dynamic> json) =>
       _$AvailabilityFromJson(json);
+}
+
+@freezed
+abstract class Details with _$Details {
+  const factory Details({
+    @JsonKey(name: 'bedrooms') required int bedrooms,
+    @JsonKey(name: 'beds') required int beds,
+    @JsonKey(name: 'bathrooms') required int bathrooms,
+  }) = _Details;
+
+  factory Details.fromJson(Map<String, dynamic> json) =>
+      _$DetailsFromJson(json);
 }
 
 @freezed

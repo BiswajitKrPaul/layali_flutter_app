@@ -11,7 +11,7 @@ import 'package:layali_flutter_app/injection.dart';
 
 class PropertyCard extends StatefulWidget {
   const PropertyCard({required this.property, super.key});
-  final ListingPropertyModel property;
+  final Property property;
 
   @override
   State<PropertyCard> createState() => _PropertyCardState();
@@ -42,7 +42,10 @@ class _PropertyCardState extends State<PropertyCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.router.push(const ListingDetailRoute()),
+      onTap:
+          () => context.router.push(
+            ListingDetailRoute(propertyModel: widget.property),
+          ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(

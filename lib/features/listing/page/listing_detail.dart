@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
+import 'package:layali_flutter_app/common/utils/extension_utils.dart';
+import 'package:layali_flutter_app/features/home/data/listing_property_model.dart';
+import 'package:layali_flutter_app/features/listing/widgets/bottom_cart_widget.dart';
 
 final imgList = [
   'https://rook.gumlet.io/uploads/center/cover_photo/635cf57206f5720001fae616/jpeg_optimizer_3___2024_07_09T193937.115.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
@@ -25,16 +31,51 @@ final imgList = [
 
 @RoutePage()
 class ListingDetail extends StatelessWidget {
-  const ListingDetail({super.key});
+  const ListingDetail({required this.propertyModel, super.key});
+
+  final Property propertyModel;
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: ImageBehindListScreen());
+    return Scaffold(
+      body: Stack(
+        children: [
+          ImageBehindListScreen(property: propertyModel),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: DecoratedBox(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10,
+                    offset: Offset(0, -4), // Negative Y offset for top shadow
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 80,
+                    width: double.maxFinite,
+                    child: BottomCartWidget(property: propertyModel),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
 class ImageBehindListScreen extends StatefulWidget {
-  const ImageBehindListScreen({super.key});
+  const ImageBehindListScreen({required this.property, super.key});
+  final Property property;
 
   @override
   State<ImageBehindListScreen> createState() => _ImageBehindListScreenState();
@@ -61,9 +102,7 @@ class _ImageBehindListScreenState extends State<ImageBehindListScreen> {
               icon: const Icon(Icons.ios_share),
             ),
             IconButton.filledTonal(
-              onPressed: () {
-                context.router.pop();
-              },
+              onPressed: () {},
               icon: const Icon(Icons.favorite_outline),
             ),
             const Gap(8),
@@ -76,7 +115,7 @@ class _ImageBehindListScreenState extends State<ImageBehindListScreen> {
                 CarouselSlider(
                   options: CarouselOptions(
                     autoPlay: true,
-                    height: 400,
+                    height: Platform.isIOS ? 420 : 400,
                     viewportFraction: 1,
                     onPageChanged: (index, reason) {
                       setState(() {
@@ -155,7 +194,7 @@ class _ImageBehindListScreenState extends State<ImageBehindListScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Green Arrow - Private 1BHK',
+                  widget.property.title,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -165,7 +204,7 @@ class _ImageBehindListScreenState extends State<ImageBehindListScreen> {
                 ),
                 const Gap(12),
                 Text(
-                  'Entire rental unit in Bengaluru, India',
+                  '${widget.property.listingType} in ${widget.property.propertyType} located at ${widget.property.location.city}',
                   style: Theme.of(context).textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -173,14 +212,26 @@ class _ImageBehindListScreenState extends State<ImageBehindListScreen> {
                   textAlign: TextAlign.center,
                   text: TextSpan(
                     style: Theme.of(context).textTheme.bodyMedium,
-                    children: const [
-                      TextSpan(text: '4 guests'),
-                      TextSpan(text: ' . '),
-                      TextSpan(text: '1 bedroom'),
-                      TextSpan(text: ' . '),
-                      TextSpan(text: '2 beds'),
-                      TextSpan(text: ' . '),
-                      TextSpan(text: '1 bath'),
+                    children: [
+                      TextSpan(
+                        text:
+                            '${widget.property.maxGuests} ${Intl.plural(widget.property.maxGuests, one: "guest", other: "guests")}',
+                      ),
+                      const TextSpan(text: ' • '),
+                      TextSpan(
+                        text:
+                            '${widget.property.details.bedrooms} ${Intl.plural(widget.property.details.bedrooms, one: "bedroom", other: "bedrooms")}',
+                      ),
+                      const TextSpan(text: ' • '),
+                      TextSpan(
+                        text:
+                            '${widget.property.details.beds} ${Intl.plural(widget.property.details.beds, one: "bed", other: "beds")}',
+                      ),
+                      const TextSpan(text: ' • '),
+                      TextSpan(
+                        text:
+                            '${widget.property.details.bathrooms} ${Intl.plural(widget.property.details.bathrooms, one: "bathroom", other: "bathrooms")}',
+                      ),
                     ],
                   ),
                 ),
@@ -191,7 +242,9 @@ class _ImageBehindListScreenState extends State<ImageBehindListScreen> {
                   leading: CircleAvatar(
                     backgroundImage: CachedNetworkImageProvider(imgList[2]),
                   ),
-                  title: const Text('Hosted by 1bhk.Life'),
+                  title: Text(
+                    'Hosted by ${widget.property.host.firstName} ${widget.property.host.lastName}',
+                  ),
                   subtitle: const Text('2 years hosting'),
                   titleTextStyle: Theme.of(context).textTheme.bodyMedium,
                   subtitleTextStyle: Theme.of(context).textTheme.bodySmall,
@@ -218,20 +271,64 @@ class _ImageBehindListScreenState extends State<ImageBehindListScreen> {
                   subtitleTextStyle: Theme.of(context).textTheme.bodySmall,
                 ),
                 const Divider(),
-                const Text(
+                Text(
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
-                  'Enjoy a stylish experience at this beautiful home! Fully private and couple friendly. You will enjoy easy access to everything from here. This place is just minutes from RMZ EcoWorld, EcoSpace, Outer Ring Road, Sarjapur road - Wipro tech park, Embassy Tech Village, Accenture, Microsoft and a bunch of breweries & restaurants...',
+                  widget.property.description,
                 ),
-                const Gap(12),
-                SizedBox(
-                  width: double.maxFinite,
-                  child: FilledButton.tonal(
-                    onPressed: () {},
-                    child: const Text('Show More'),
+                Visibility(
+                  visible: AppUtils.hasTextOverflow(
+                    widget.property.description,
+                    null,
+                    null,
+                    maxLines: 5,
+                    maxWidth: MediaQuery.of(context).size.shortestSide - 40,
+                  ),
+                  child: const Gap(12),
+                ),
+                Visibility(
+                  visible: AppUtils.hasTextOverflow(
+                    widget.property.description,
+                    null,
+                    null,
+                    maxLines: 5,
+                    maxWidth: MediaQuery.of(context).size.shortestSide - 40,
+                  ),
+                  child: SizedBox(
+                    width: double.maxFinite,
+                    child: FilledButton.tonal(
+                      onPressed: () {
+                        showDialog<AlertDialog>(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Description'),
+                              content: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  maxHeight: 300,
+                                ),
+                                child: SingleChildScrollView(
+                                  child: Text(widget.property.description),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: const Text('Show More'),
+                    ),
                   ),
                 ),
-                const Gap(12),
+                Visibility(
+                  visible: AppUtils.hasTextOverflow(
+                    widget.property.description,
+                    null,
+                    null,
+                    maxLines: 5,
+                    maxWidth: MediaQuery.of(context).size.shortestSide - 40,
+                  ),
+                  child: const Gap(12),
+                ),
                 const Divider(),
                 const Gap(12),
                 Text(
@@ -371,7 +468,7 @@ class _ImageBehindListScreenState extends State<ImageBehindListScreen> {
                     ),
                   ],
                 ),
-                const Gap(40),
+                const Gap(140),
               ],
             ),
           ),

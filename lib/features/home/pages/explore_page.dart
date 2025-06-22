@@ -11,8 +11,34 @@ import 'package:layali_flutter_app/features/home/widgets/search_field.dart';
 import 'package:layali_flutter_app/injection.dart';
 
 @RoutePage()
-class ExplorePage extends StatelessWidget {
+class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
+
+  @override
+  State<ExplorePage> createState() => _ExplorePageState();
+}
+
+class _ExplorePageState extends State<ExplorePage> {
+  final _listScrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    _listScrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_listScrollController.position.pixels ==
+            _listScrollController.position.maxScrollExtent &&
+        !context.read<ListingPropetyCubit>().state.hasReachLastPage) {
+      context.read<ListingPropetyCubit>().getNextPage();
+    }
+  }
+
+  @override
+  void dispose() {
+    _listScrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,15 +93,30 @@ class ExplorePage extends StatelessWidget {
                     builder: (context, state) {
                       if (state.isLoading) {
                         return const Center(child: CircularProgressIndicator());
-                      } else if (state.properties.isEmpty) {
+                      } else if (state.properties?.results.isEmpty ?? true) {
                         return const Center(child: Text('No Properties found'));
                       }
                       return ListView.separated(
-                        itemBuilder:
-                            (context, index) =>
-                                PropertyCard(property: state.properties[index]),
+                        controller: _listScrollController,
+                        itemBuilder: (context, index) {
+                          if (index == state.totalItems) {
+                            return const Center(
+                              child: SizedBox(
+                                height: 40,
+                                width: 40,
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          }
+                          return PropertyCard(
+                            property: state.properties!.results[index],
+                          );
+                        },
                         separatorBuilder: (context, index) => const Gap(24),
-                        itemCount: state.properties.length,
+                        itemCount:
+                            state.hasReachLastPage
+                                ? state.totalItems
+                                : state.totalItems + 1,
                       );
                     },
                   ),

@@ -17,3 +17,22 @@ extension ValidatorBuilders on ValidationBuilder {
     return null;
   });
 }
+
+class AppUtils {
+  static bool hasTextOverflow(
+    String text,
+    TextStyle? style,
+    double? textScaleFactor, {
+    double minWidth = 0,
+    double maxWidth = double.infinity,
+    int maxLines = 2,
+  }) {
+    final textPainter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      maxLines: maxLines,
+      textDirection: TextDirection.ltr,
+      textScaler: TextScaler.linear(textScaleFactor ?? 1.0),
+    )..layout(minWidth: minWidth, maxWidth: maxWidth);
+    return textPainter.didExceedMaxLines;
+  }
+}

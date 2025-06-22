@@ -12,11 +12,13 @@ abstract class PropertyService extends ChopperService {
   static PropertyService create([ChopperClient? client]) =>
       _$PropertyService(client);
 
-  @POST(path: '/nearby-locations/nearby-locations')
-  Future<Response<List<Map<String, dynamic>>>> getPropertyListing(
-    @Field('latitude') double latitude,
-    @Field('longitude') double password,
-    @Field('radius_km') double? radiusKm,
-    @Field('city') String? city,
+  @GET(path: '/nearby-locations/nearby-locations')
+  Future<Response<Map<String, dynamic>>> getPropertyListing(
+    @Query('latitude') double? latitude,
+    @Query('longitude') double? longitude,
+    @Query('radius_km') double? radiusKm,
+    @Query('city') String? city,
+    @Query('page') int page,
+    @Query('limit') int? limit,
   );
 }

@@ -6,7 +6,10 @@ abstract class ListingPropetyState with _$ListingPropetyState {
     @Default(false) bool isLoading,
     @Default(false) bool hasError,
     @Default('') String errorMessage,
-    @Default([]) List<ListingPropertyModel> properties,
-    @Default(LatLng(latitude: 0, longitude: 0)) LatLng location,
+    ListingPropertyModel? properties,
+    @Default(0) int totalItems,
+    LatLng? location,
+    @Default(1) int page,
+    @Default(false) bool hasReachLastPage,
   }) = _ListingPropetyState;
 }

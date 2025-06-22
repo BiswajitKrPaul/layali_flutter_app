@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:layali_flutter_app/data/error_response.dart';
 import 'package:layali_flutter_app/data/lat_lng.dart';
 import 'package:layali_flutter_app/domain/rest_client.dart';
@@ -18,33 +17,37 @@ class ListingPropetyCubit extends Cubit<ListingPropetyState> {
       getIt.get<RestProtectedService>().client.getService<PropertyService>();
 
   void softReset() {
-    emit(state.copyWith(hasError: false, errorMessage: ''));
+    emit(
+      state.copyWith(
+        hasError: false,
+        errorMessage: '',
+        page: 1,
+        hasReachLastPage: false,
+      ),
+    );
   }
 
   Future<void> getAllListing({LatLng? location}) async {
     softReset();
     emit(state.copyWith(isLoading: true));
-    LatLng data;
-    if (location == null) {
-      final pos = await Geolocator.getCurrentPosition();
-      data = LatLng(latitude: pos.latitude, longitude: pos.longitude);
-    } else {
-      data = location;
-    }
     final response = await _restClient.getPropertyListing(
-      data.latitude,
-      data.longitude,
-      10,
+      location?.latitude,
+      location?.longitude,
+      null,
+      null,
+      1,
       null,
     );
     if (response.isSuccessful && response.body != null) {
-      final listing =
-          response.body!.map(ListingPropertyModel.fromJson).toList();
+      final listing = ListingPropertyModel.fromJson(response.body!);
       emit(
         state.copyWith(
           isLoading: false,
           properties: listing,
-          location: LatLng(latitude: data.latitude, longitude: data.longitude),
+          location: location,
+          page: listing.page,
+          totalItems: listing.results.length,
+          hasReachLastPage: listing.total == listing.results.length,
         ),
       );
     } else {
@@ -56,6 +59,36 @@ class ListingPropetyCubit extends Cubit<ListingPropetyState> {
               ErrorResponse.fromJson(
                 (response.error as Map<String, dynamic>?) ?? {},
               ).detail,
+        ),
+      );
+    }
+  }
+
+  Future<void> getNextPage() async {
+    if (state.hasReachLastPage) return;
+    final currentPage = state.page + 1;
+    final response = await _restClient.getPropertyListing(
+      state.location?.latitude,
+      state.location?.longitude,
+      null,
+      null,
+      currentPage,
+      null,
+    );
+    if (response.isSuccessful) {
+      final listing = ListingPropertyModel.fromJson(response.body!);
+      final data = [...state.properties!.results, ...listing.results];
+      emit(
+        state.copyWith(
+          properties: state.properties!.copyWith(
+            limit: listing.limit,
+            page: listing.page,
+            total: listing.total,
+            results: data,
+          ),
+          page: currentPage,
+          totalItems: data.length,
+          hasReachLastPage: listing.total == data.length,
         ),
       );
     }

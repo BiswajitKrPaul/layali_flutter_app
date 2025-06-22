@@ -101,11 +101,18 @@ class _SearchPageState extends State<SearchPage> {
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                                 const Gap(16),
+                                if (state.isLoading)
+                                  const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
                                 if (state.places == null ||
-                                    state.places!.predictions!.isEmpty)
-                                  const Text('No recent searches'),
+                                    state.places!.predictions!.isEmpty &&
+                                        !state.isLoading)
+                                  if (!state.isLoading)
+                                    const Text('No recent searches'),
                                 if (state.places != null &&
-                                    state.places!.predictions!.isNotEmpty)
+                                    state.places!.predictions!.isNotEmpty &&
+                                    !state.isLoading)
                                   Column(
                                     children:
                                         state.places!.predictions!
