@@ -9,15 +9,6 @@ import 'package:layali_flutter_app/features/listing/cubits/book_apartment_cubit/
 import 'package:layali_flutter_app/features/listing/widgets/cart_counter.dart';
 import 'package:layali_flutter_app/features/listing/widgets/property_checkout_image.dart';
 
-// List<DateTime> disabledDates = [
-//   DateTime(2025, 6, 23),
-//   DateTime(2025, 7, 5),
-//   DateTime(2025, 7, 10),
-//   DateTime(2025, 7, 16),
-//   DateTime(2025, 7, 20),
-//   DateTime(2025, 7, 28),
-// ];
-
 @RoutePage()
 class ListBookingPage extends StatefulWidget implements AutoRouteWrapper {
   const ListBookingPage({required this.property, super.key});
@@ -41,7 +32,19 @@ class _ListBookingPageState extends State<ListBookingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Confirm and pay'), elevation: 2),
-      body: BlocBuilder<BookApartmentCubit, BookApartmentState>(
+      body: BlocConsumer<BookApartmentCubit, BookApartmentState>(
+        listener: (context, state) {
+          if (state.hasError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.errorMessage ??
+                      "Couldn't book apartment. Please try again in sometime.",
+                ),
+              ),
+            );
+          }
+        },
         builder: (context, state) {
           return ListView(
             physics: const ClampingScrollPhysics(),
@@ -245,11 +248,21 @@ class _ListBookingPageState extends State<ListBookingPage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onPressed: () {},
-                    child: const Text(
-                      'Proceed to pay',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    onPressed:
+                        state.isLoading
+                            ? null
+                            : () {
+                              context.read<BookApartmentCubit>().bookApartment(
+                                widget.property.id,
+                              );
+                            },
+                    child:
+                        state.isLoading
+                            ? const CircularProgressIndicator()
+                            : const Text(
+                              'Proceed to pay',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                   ),
                 ),
               ),

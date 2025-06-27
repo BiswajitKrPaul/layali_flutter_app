@@ -7,6 +7,10 @@ abstract class BookApartmentState with _$BookApartmentState {
     DateTime? endDate,
     @Default(1) int guests,
     @Default(1) int maxGuests,
+    @Default(false) bool isLoading,
+    @Default(false) bool isDone,
+    @Default(false) bool hasError,
+    String? errorMessage,
   }) = _BookApartmentState;
 
   const BookApartmentState._();
