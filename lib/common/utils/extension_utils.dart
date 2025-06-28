@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:intl/intl.dart' as intl;
 import 'package:layali_flutter_app/l10n/app_localizations.dart';
 
 extension L10nUtils on BuildContext {
@@ -34,5 +35,9 @@ class AppUtils {
       textScaler: TextScaler.linear(textScaleFactor ?? 1.0),
     )..layout(minWidth: minWidth, maxWidth: maxWidth);
     return textPainter.didExceedMaxLines;
+  }
+
+  static String getFormattedNumber(DateTime date) {
+    return intl.DateFormat('yyyy-MM-dd').format(date);
   }
 }

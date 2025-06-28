@@ -23,8 +23,27 @@ class SearchField extends StatelessWidget {
             if (!await Geolocator.isLocationServiceEnabled()) {
               await Geolocator.openLocationSettings();
             } else if (await Geolocator.checkPermission() ==
-                LocationPermission.denied) {
-              await Geolocator.requestPermission();
+                    LocationPermission.denied &&
+                context.mounted) {
+              final permission = await Geolocator.requestPermission();
+              if (permission == LocationPermission.deniedForever &&
+                  context.mounted) {
+                late AwesomeDialog dialog;
+                dialog = AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.error,
+                  title: 'Location Permission Denied by you.',
+                  desc: 'Please allow location permission in the app settings.',
+                  btnOkOnPress: () async {
+                    await Geolocator.openAppSettings();
+                  },
+                  btnOkText: 'Open Settings',
+                  btnCancelOnPress: () {
+                    dialog.dismiss();
+                  },
+                );
+                await dialog.show();
+              }
             } else if (await Geolocator.checkPermission() ==
                     LocationPermission.deniedForever &&
                 context.mounted) {

@@ -14,4 +14,7 @@ abstract class ListingService extends ChopperService {
     @Field('checkout') String checkOutDate,
     @Field('guest_details') Map<String, dynamic> guests,
   );
+
+  @GET(path: '/my-bookings')
+  Future<Response<Map<String, dynamic>>> getAllTrips();
 }
