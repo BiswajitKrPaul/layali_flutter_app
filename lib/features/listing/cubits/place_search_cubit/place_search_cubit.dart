@@ -88,10 +88,10 @@ class PlaceSearchCubit extends Cubit<PlaceSearchState> {
         hideListPredicate: false,
         isDone: true,
         selectedPlace: null,
-        maxGuest: 0,
+        maxGuest: 6,
         minGuest: 0,
         minPrice: 0,
-        maxPrice: 0,
+        maxPrice: 6,
       ),
     );
   }
@@ -124,8 +124,10 @@ class PlaceSearchCubit extends Cubit<PlaceSearchState> {
         petsAllowed: false,
         selectedPlace: null,
         smokingAllowed: false,
-        maxGuest: 0,
+        maxGuest: 6,
         minGuest: 0,
+        minPrice: 0,
+        maxPrice: 6,
       ),
     );
   }

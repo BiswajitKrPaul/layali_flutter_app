@@ -14,9 +14,9 @@ abstract class PlaceSearchState with _$PlaceSearchState {
     Prediction? selectedPlace,
     @Default([]) List<String> amenities,
     @Default(0) int minGuest,
-    @Default(0) int maxGuest,
+    @Default(6) int maxGuest,
     @Default(0.0) double minPrice,
-    @Default(0.0) double maxPrice,
+    @Default(6.0) double maxPrice,
   }) = _PlaceSearchState;
 
   factory PlaceSearchState.reset() => const PlaceSearchState();

@@ -100,7 +100,7 @@ class _PropertyCardState extends State<PropertyCard> {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
                 // widget.property.location.city,
-                'Location',
+                widget.property.title,
                 style: Theme.of(
                   context,
                 ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w500),
