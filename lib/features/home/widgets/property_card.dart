@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:layali_flutter_app/app_router.gr.dart';
 import 'package:layali_flutter_app/features/home/data/listing_property_model.dart';
 
 final imgList = [
@@ -38,11 +40,8 @@ class _PropertyCardState extends State<PropertyCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap:
-      //     () => context.router.push(
-      //       ListingDetailRoute(propertyModel: widget.property),
-      //     ),
-      onTap: () {},
+      onTap:
+          () => context.router.push(ListingDetailRoute(id: widget.property.id)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(

@@ -5,7 +5,6 @@
 import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:layali_flutter_app/features/home/data/property_data.dart';
 
 part 'listing_property_model.freezed.dart';
 part 'listing_property_model.g.dart';

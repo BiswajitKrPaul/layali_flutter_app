@@ -28,4 +28,8 @@ abstract class PropertyService extends ChopperService {
     @Query('pets_allowed') bool? isPetAllowed,
     @Query('amenities') List<String>? amenities,
   });
+  @GET(path: 'property/{id}')
+  Future<Response<Map<String, dynamic>>> getPropertyDetails({
+    @Path('id') String propertyId = '',
+  });
 }
