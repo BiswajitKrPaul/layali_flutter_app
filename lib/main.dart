@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:layali_flutter_app/app_router.dart';
+import 'package:layali_flutter_app/common/cubits/amenities_list_cubit/amenities_list_cubit.dart';
 import 'package:layali_flutter_app/common/cubits/app_language_cubit/app_language_cubit.dart';
 import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:layali_flutter_app/common/cubits/location_service_cubit/location_service_cubit.dart';
@@ -35,12 +36,13 @@ void main() async {
             return getIt.get<LocationServiceCubit>();
           },
         ),
+        BlocProvider(create: (context) => getIt.get<AmenitiesListCubit>()),
         BlocProvider(
           create: (context) {
             return ListingPropetyCubit();
           },
         ),
-        BlocProvider(create: (context) => PlaceSearchCubit()),
+        BlocProvider(create: (context) => getIt.get<PlaceSearchCubit>()),
       ],
       child: const MyApp(),
     ),
@@ -49,6 +51,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

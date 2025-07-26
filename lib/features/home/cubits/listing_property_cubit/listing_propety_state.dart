@@ -8,7 +8,8 @@ abstract class ListingPropetyState with _$ListingPropetyState {
     @Default('') String errorMessage,
     ListingPropertyModel? properties,
     @Default(0) int totalItems,
-    LatLng? location,
+    double? latitude,
+    double? longitude,
     @Default(1) int page,
     @Default(false) bool hasReachLastPage,
   }) = _ListingPropetyState;

@@ -64,7 +64,7 @@ class SearchField extends StatelessWidget {
               await dialog.show();
             } else {
               if (!context.mounted) return;
-              context.read<PlaceSearchCubit>().clear();
+              context.read<PlaceSearchCubit>().softReset();
               await context.router.push(const SearchPageRoute());
             }
           },
@@ -77,9 +77,13 @@ class SearchField extends StatelessWidget {
               children: [
                 const Icon(Icons.search),
                 Text(
-                  context.watch<PlaceSearchCubit>().state.placeName.isEmpty
+                  context.watch<PlaceSearchCubit>().state.selectedPlace == null
                       ? context.localizations.startYourSearch
-                      : context.watch<PlaceSearchCubit>().state.placeName,
+                      : context
+                          .watch<PlaceSearchCubit>()
+                          .state
+                          .selectedPlace!
+                          .description!,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 if (context
@@ -89,7 +93,6 @@ class SearchField extends StatelessWidget {
                     .isNotEmpty)
                   GestureDetector(
                     onTap: () {
-                      context.read<PlaceSearchCubit>().clear();
                       context.read<ListingPropetyCubit>().getAllListing();
                     },
                     child: const Icon(Icons.close),

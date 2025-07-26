@@ -2,9 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:layali_flutter_app/app_router.gr.dart';
+import 'package:layali_flutter_app/common/cubits/amenities_list_cubit/amenities_list_cubit.dart';
 import 'package:layali_flutter_app/common/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:layali_flutter_app/common/utils/extension_utils.dart';
 import 'package:layali_flutter_app/features/home/cubits/listing_property_cubit/listing_propety_cubit.dart';
+import 'package:layali_flutter_app/injection.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget {
@@ -18,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    getIt.get<AmenitiesListCubit>().getAmenitiesList();
     context.read<ListingPropetyCubit>().getAllListing();
   }
 

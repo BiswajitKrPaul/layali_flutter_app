@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:layali_flutter_app/domain/apply_header_interceptors.dart';
 import 'package:layali_flutter_app/domain/token_expire_interceptor.dart';
 import 'package:layali_flutter_app/env.dart';
+import 'package:layali_flutter_app/services/amenities_service.dart';
 import 'package:layali_flutter_app/services/auth_service.dart';
 import 'package:layali_flutter_app/services/listing_service.dart';
 import 'package:layali_flutter_app/services/property_service.dart';
@@ -31,6 +32,7 @@ class RestProtectedService {
       UserService.create(),
       PropertyService.create(),
       ListingService.create(),
+      AmenitiesService.create(),
     ],
     interceptors: [
       ApplyHeaderInterceptor(),

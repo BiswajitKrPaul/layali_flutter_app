@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:layali_flutter_app/data/error_response.dart';
-import 'package:layali_flutter_app/data/lat_lng.dart';
 import 'package:layali_flutter_app/domain/rest_client.dart';
 import 'package:layali_flutter_app/features/home/data/listing_property_model.dart';
+import 'package:layali_flutter_app/features/listing/cubits/place_search_cubit/place_search_cubit.dart';
 import 'package:layali_flutter_app/injection.dart';
 import 'package:layali_flutter_app/services/property_service.dart';
 
@@ -27,16 +27,29 @@ class ListingPropetyCubit extends Cubit<ListingPropetyState> {
     );
   }
 
-  Future<void> getAllListing({LatLng? location}) async {
+  Future<void> getAllListing({
+    double? latitude,
+    double? longitude,
+    int? maxGuest,
+    int? minGuest,
+    double? minPrice,
+    double? maxPrice,
+    bool? isSmokingAllowed,
+    bool? isPetAllowed,
+    List<String>? amenities,
+  }) async {
     softReset();
     emit(state.copyWith(isLoading: true));
     final response = await _restClient.getPropertyListing(
-      location?.latitude,
-      location?.longitude,
-      null,
-      null,
-      1,
-      null,
+      latitude: latitude,
+      longitude: longitude,
+      isPetAllowed: isPetAllowed,
+      isSmokingAllowed: isSmokingAllowed,
+      maxGuest: maxGuest,
+      minGuest: minGuest,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      amenities: amenities,
     );
     if (response.isSuccessful && response.body != null) {
       final listing = ListingPropertyModel.fromJson(response.body!);
@@ -44,7 +57,8 @@ class ListingPropetyCubit extends Cubit<ListingPropetyState> {
         state.copyWith(
           isLoading: false,
           properties: listing,
-          location: location,
+          latitude: latitude,
+          longitude: longitude,
           page: listing.page,
           totalItems: listing.results.length,
           hasReachLastPage: listing.total == listing.results.length,
@@ -67,13 +81,34 @@ class ListingPropetyCubit extends Cubit<ListingPropetyState> {
   Future<void> getNextPage() async {
     if (state.hasReachLastPage) return;
     final currentPage = state.page + 1;
+    final currentState = getIt.get<PlaceSearchCubit>().state;
     final response = await _restClient.getPropertyListing(
-      state.location?.latitude,
-      state.location?.longitude,
-      null,
-      null,
-      currentPage,
-      null,
+      latitude: state.latitude,
+      longitude: state.longitude,
+      page: currentPage,
+      isPetAllowed:
+          currentState.petsAllowed == true ? currentState.petsAllowed : null,
+      isSmokingAllowed:
+          currentState.smokingAllowed == true
+              ? currentState.smokingAllowed
+              : null,
+      amenities: currentState.amenities.isEmpty ? null : currentState.amenities,
+      maxGuest:
+          currentState.maxGuest == 0 || currentState.maxGuest == 6
+              ? null
+              : currentState.maxGuest,
+      minGuest:
+          currentState.minGuest == 0 || currentState.minGuest == 6
+              ? null
+              : currentState.minGuest,
+      maxPrice:
+          currentState.maxPrice == 0 || currentState.maxPrice == 6
+              ? null
+              : currentState.maxPrice * 200,
+      minPrice:
+          currentState.minPrice == 0 || currentState.minPrice == 6
+              ? null
+              : currentState.minPrice * 200,
     );
     if (response.isSuccessful) {
       final listing = ListingPropertyModel.fromJson(response.body!);

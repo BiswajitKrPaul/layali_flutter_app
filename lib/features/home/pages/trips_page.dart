@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:layali_flutter_app/common/utils/extension_utils.dart';
 import 'package:layali_flutter_app/features/home/cubits/my_trips_cubit/my_trips_cubit.dart';
+import 'package:layali_flutter_app/features/home/widgets/property_card.dart';
 import 'package:layali_flutter_app/features/home/widgets/trip_card.dart';
-import 'package:layali_flutter_app/features/listing/page/listing_detail.dart';
 
 @RoutePage()
 class TripsPage extends StatelessWidget implements AutoRouteWrapper {

@@ -42,6 +42,7 @@ dependencies:
   permission_handler: ^12.0.0+1
   pretty_chopper_logger: ^1.2.2
   recase: ^4.1.0
+  syncfusion_flutter_sliders: ^30.1.41
 
 dev_dependencies:
   flutter_test:

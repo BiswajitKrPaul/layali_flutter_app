@@ -1,13 +1,31 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:layali_flutter_app/app_router.gr.dart';
 import 'package:layali_flutter_app/features/home/data/listing_property_model.dart';
+
+final imgList = [
+  'https://rook.gumlet.io/uploads/center/cover_photo/635cf57206f5720001fae616/jpeg_optimizer_3___2024_07_09T193937.115.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center_caption_photo/photo/65697d47080bc60001dac0c5/DSC08705_01_copy_1423x949.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center_caption_photo/photo/675a91930d7f46000111412d/7__1_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center_caption_photo/photo/668d44f20b66370001ebed0f/12__87_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center/cover_photo/635cf57206f5720001fae616/jpeg_optimizer_3___2024_07_09T193937.115.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center_caption_photo/photo/65697d47080bc60001dac0c5/DSC08705_01_copy_1423x949.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center_caption_photo/photo/675a91930d7f46000111412d/7__1_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center_caption_photo/photo/668d44f20b66370001ebed0f/12__87_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center/cover_photo/635cf57206f5720001fae616/jpeg_optimizer_3___2024_07_09T193937.115.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center_caption_photo/photo/65697d47080bc60001dac0c5/DSC08705_01_copy_1423x949.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center_caption_photo/photo/675a91930d7f46000111412d/7__1_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center_caption_photo/photo/668d44f20b66370001ebed0f/12__87_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center/cover_photo/635cf57206f5720001fae616/jpeg_optimizer_3___2024_07_09T193937.115.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center_caption_photo/photo/65697d47080bc60001dac0c5/DSC08705_01_copy_1423x949.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center_caption_photo/photo/675a91930d7f46000111412d/7__1_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+  'https://rook.gumlet.io/uploads/center_caption_photo/photo/668d44f20b66370001ebed0f/12__87_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
+];
 
 class PropertyCard extends StatefulWidget {
   const PropertyCard({required this.property, super.key});
+
   final Property property;
 
   @override
@@ -15,34 +33,16 @@ class PropertyCard extends StatefulWidget {
 }
 
 class _PropertyCardState extends State<PropertyCard> {
-  final imgList = [
-    'https://rook.gumlet.io/uploads/center/cover_photo/635cf57206f5720001fae616/jpeg_optimizer_3___2024_07_09T193937.115.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center_caption_photo/photo/65697d47080bc60001dac0c5/DSC08705_01_copy_1423x949.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center_caption_photo/photo/675a91930d7f46000111412d/7__1_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center_caption_photo/photo/668d44f20b66370001ebed0f/12__87_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center/cover_photo/635cf57206f5720001fae616/jpeg_optimizer_3___2024_07_09T193937.115.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center_caption_photo/photo/65697d47080bc60001dac0c5/DSC08705_01_copy_1423x949.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center_caption_photo/photo/675a91930d7f46000111412d/7__1_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center_caption_photo/photo/668d44f20b66370001ebed0f/12__87_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center/cover_photo/635cf57206f5720001fae616/jpeg_optimizer_3___2024_07_09T193937.115.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center_caption_photo/photo/65697d47080bc60001dac0c5/DSC08705_01_copy_1423x949.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center_caption_photo/photo/675a91930d7f46000111412d/7__1_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center_caption_photo/photo/668d44f20b66370001ebed0f/12__87_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center/cover_photo/635cf57206f5720001fae616/jpeg_optimizer_3___2024_07_09T193937.115.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center_caption_photo/photo/65697d47080bc60001dac0c5/DSC08705_01_copy_1423x949.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center_caption_photo/photo/675a91930d7f46000111412d/7__1_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-    'https://rook.gumlet.io/uploads/center_caption_photo/photo/668d44f20b66370001ebed0f/12__87_.jpg?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=100%&ar=1.5',
-  ];
-
   var _currentImageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap:
-          () => context.router.push(
-            ListingDetailRoute(propertyModel: widget.property),
-          ),
+      // onTap:
+      //     () => context.router.push(
+      //       ListingDetailRoute(propertyModel: widget.property),
+      //     ),
+      onTap: () {},
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -100,7 +100,8 @@ class _PropertyCardState extends State<PropertyCard> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-                widget.property.location.city,
+                // widget.property.location.city,
+                'Location',
                 style: Theme.of(
                   context,
                 ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w500),
@@ -112,7 +113,8 @@ class _PropertyCardState extends State<PropertyCard> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-                widget.property.location.country.name,
+                // widget.property.location.country.name,
+                'Country',
                 style: Theme.of(context).textTheme.labelMedium,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
