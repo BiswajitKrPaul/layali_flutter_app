@@ -1,13 +1,16 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:layali_flutter_app/common/utils/constants.dart';
+import 'package:layali_flutter_app/features/listing/cubits/bargain_apartment_cubit/bargain_apartment_cubit.dart';
 import 'package:layali_flutter_app/features/listing/cubits/book_apartment_cubit/book_apartment_cubit.dart';
 import 'package:layali_flutter_app/features/listing/data/property_detail_model.dart';
 import 'package:layali_flutter_app/features/listing/widgets/cart_counter.dart';
 import 'package:layali_flutter_app/features/listing/widgets/property_checkout_image.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 @RoutePage()
 class ListBookingPage extends StatefulWidget implements AutoRouteWrapper {
@@ -20,8 +23,15 @@ class ListBookingPage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => BookApartmentCubit()..setDefault(2),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => BookApartmentCubit()..setDefault(2)),
+        BlocProvider(
+          create:
+              (context) =>
+                  BargainApartmentCubit()..setPrice(property.pricePerNight),
+        ),
+      ],
       child: this,
     );
   }
@@ -237,7 +247,193 @@ class _ListBookingPageState extends State<ListBookingPage> {
                   ),
                 ),
               ),
-              const Gap(16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 48,
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            'Save for later',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Gap(8),
+                    Expanded(
+                      child: SizedBox(
+                        height: 48,
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onPressed: () {
+                            late AwesomeDialog dialog;
+                            context.read<BargainApartmentCubit>().setPrice(
+                              widget.property.pricePerNight,
+                            );
+                            dialog = AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.noHeader,
+                              bodyHeaderDistance: 0,
+                              body: BlocProvider.value(
+                                value: context.read<BargainApartmentCubit>(),
+                                child: Builder(
+                                  builder: (context) {
+                                    return BlocConsumer<
+                                      BargainApartmentCubit,
+                                      BargainApartmentState
+                                    >(
+                                      listener: (context, state) {},
+                                      builder: (context, bargainState) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                'Please adjust the bargain price (in ${Constants.euroSymbol}).',
+                                                style: Theme.of(
+                                                  context,
+                                                ).textTheme.bodyLarge?.copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              SfSlider(
+                                                min:
+                                                    widget
+                                                        .property
+                                                        .pricePerNight -
+                                                    200,
+                                                max:
+                                                    widget
+                                                        .property
+                                                        .pricePerNight +
+                                                    200,
+                                                interval: 50,
+                                                showTicks: true,
+                                                showLabels: true,
+                                                value:
+                                                    bargainState.pricePerNight,
+                                                onChanged: (value) {
+                                                  context
+                                                      .read<
+                                                        BargainApartmentCubit
+                                                      >()
+                                                      .setPrice(
+                                                        value as double,
+                                                      );
+                                                },
+                                              ),
+                                              const Gap(24),
+                                              Text(
+                                                'Proposed price : ${Constants.euroSymbol}${bargainState.pricePerNight.toStringAsFixed(2)}',
+                                                style: Theme.of(
+                                                  context,
+                                                ).textTheme.bodyLarge?.copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              const Gap(32),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  FilledButton(
+                                                    style: FilledButton.styleFrom(
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              10,
+                                                            ),
+                                                      ),
+                                                      backgroundColor:
+                                                          Theme.of(
+                                                            context,
+                                                          ).colorScheme.error,
+                                                    ),
+                                                    onPressed: () {
+                                                      dialog.dismiss();
+                                                    },
+                                                    child: const Text('Cancel'),
+                                                  ),
+                                                  const Gap(8),
+                                                  FilledButton(
+                                                    style: FilledButton.styleFrom(
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              10,
+                                                            ),
+                                                      ),
+                                                    ),
+                                                    onPressed:
+                                                        bargainState.isLoading
+                                                            ? null
+                                                            : () {
+                                                              context
+                                                                  .read<
+                                                                    BargainApartmentCubit
+                                                                  >()
+                                                                  .proposedPropertyPrice(
+                                                                    state
+                                                                        .guests,
+                                                                    widget
+                                                                        .property
+                                                                        .id,
+                                                                    context,
+                                                                    state
+                                                                        .startDate!,
+                                                                    state
+                                                                        .endDate!,
+                                                                  );
+                                                            },
+                                                    child:
+                                                        bargainState.isLoading
+                                                            ? const CircularProgressIndicator()
+                                                            : const Text(
+                                                              'Save',
+                                                            ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            )..show();
+                          },
+                          child: const Text(
+                            'Bargain price',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: SizedBox(

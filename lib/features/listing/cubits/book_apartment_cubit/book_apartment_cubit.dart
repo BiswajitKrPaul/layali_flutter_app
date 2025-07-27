@@ -62,7 +62,7 @@ class BookApartmentCubit extends Cubit<BookApartmentState> {
                 ? null
                 : _getFormattedDate(state.startDate!),
         checkOutDate:
-            state.startDate == null ? null : _getFormattedDate(state.endDate!),
+            state.endDate == null ? null : _getFormattedDate(state.endDate!),
         guests: {'adult': state.guests, 'children': 0, 'infant': 0},
         mode: BookingMode.standard.name,
       );

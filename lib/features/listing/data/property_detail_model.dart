@@ -29,7 +29,7 @@ abstract class PropertyDetailModel with _$PropertyDetailModel {
     @JsonKey(name: 'bedrooms') required int bedrooms,
     @JsonKey(name: 'beds') required int beds,
     @JsonKey(name: 'bathrooms') required int bathrooms,
-    @JsonKey(name: 'price_per_night') required int pricePerNight,
+    @JsonKey(name: 'price_per_night') required double pricePerNight,
     @JsonKey(name: 'availability') required List<Availability> availability,
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'location') required Location location,
