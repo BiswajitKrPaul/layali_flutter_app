@@ -37,6 +37,7 @@ class ListingPropetyCubit extends Cubit<ListingPropetyState> {
     bool? isSmokingAllowed,
     bool? isPetAllowed,
     List<String>? amenities,
+    int radius = 10,
   }) async {
     softReset();
     emit(state.copyWith(isLoading: true));
@@ -50,6 +51,7 @@ class ListingPropetyCubit extends Cubit<ListingPropetyState> {
       minPrice: minPrice,
       maxPrice: maxPrice,
       amenities: amenities,
+      radiusKm: radius.toDouble(),
     );
     if (response.isSuccessful && response.body != null) {
       final listing = ListingPropertyModel.fromJson(response.body!);
@@ -109,6 +111,7 @@ class ListingPropetyCubit extends Cubit<ListingPropetyState> {
           currentState.minPrice == 0 || currentState.minPrice == 6
               ? null
               : currentState.minPrice * 200,
+      radiusKm: currentState.radiusInKm.toDouble(),
     );
     if (response.isSuccessful) {
       final listing = ListingPropertyModel.fromJson(response.body!);

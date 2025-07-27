@@ -26,6 +26,10 @@ class PlaceSearchCubit extends Cubit<PlaceSearchState> {
     emit(state.copyWith(smokingAllowed: value));
   }
 
+  void setRadiusInKm(int value) {
+    emit(state.copyWith(radiusInKm: value));
+  }
+
   void setOrRemoveAmenities(String amenity) {
     if (state.amenities.contains(amenity)) {
       final index = state.amenities.indexOf(amenity);
@@ -92,6 +96,7 @@ class PlaceSearchCubit extends Cubit<PlaceSearchState> {
         minGuest: 0,
         minPrice: 0,
         maxPrice: 6,
+        radiusInKm: 10,
       ),
     );
   }
@@ -128,6 +133,7 @@ class PlaceSearchCubit extends Cubit<PlaceSearchState> {
         minGuest: 0,
         minPrice: 0,
         maxPrice: 6,
+        radiusInKm: 10,
       ),
     );
   }

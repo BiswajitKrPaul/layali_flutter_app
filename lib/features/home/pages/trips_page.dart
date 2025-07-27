@@ -7,15 +7,18 @@ import 'package:layali_flutter_app/features/home/widgets/property_card.dart';
 import 'package:layali_flutter_app/features/home/widgets/trip_card.dart';
 
 @RoutePage()
-class TripsPage extends StatelessWidget implements AutoRouteWrapper {
+class TripsPage extends StatefulWidget {
   const TripsPage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MyTripsCubit()..getMyTrips(),
-      child: this,
-    );
+  State<TripsPage> createState() => _TripsPageState();
+}
+
+class _TripsPageState extends State<TripsPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<MyTripsCubit>().getMyTrips();
   }
 
   @override

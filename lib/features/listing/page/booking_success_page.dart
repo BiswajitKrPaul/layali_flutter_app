@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:layali_flutter_app/features/home/cubits/my_trips_cubit/my_trips_cubit.dart';
 import 'package:layali_flutter_app/gen/assets.gen.dart';
+import 'package:layali_flutter_app/injection.dart';
 import 'package:lottie/lottie.dart';
 
 @RoutePage()
@@ -48,7 +50,10 @@ class BookingSuccessPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  onPressed: () => context.router.pop(),
+                  onPressed: () {
+                    getIt.get<MyTripsCubit>().getMyTrips();
+                    context.router.pop();
+                  },
                   child: const Text('Go Back'),
                 ),
               ),

@@ -56,10 +56,15 @@ class BookApartmentCubit extends Cubit<BookApartmentState> {
     try {
       emit(state.copyWith(isLoading: true));
       final response = await _restClient.bookProperty(
-        propertyId,
-        _getFormattedDate(state.startDate!),
-        _getFormattedDate(state.endDate!),
-        {'adult': state.guests, 'children': 0, 'infant': 0},
+        propertyId: propertyId,
+        checkInDate:
+            state.startDate == null
+                ? null
+                : _getFormattedDate(state.startDate!),
+        checkOutDate:
+            state.startDate == null ? null : _getFormattedDate(state.endDate!),
+        guests: {'adult': state.guests, 'children': 0, 'infant': 0},
+        mode: BookingMode.standard.name,
       );
       if (response.isSuccessful) {
         unawaited(

@@ -17,6 +17,7 @@ abstract class PlaceSearchState with _$PlaceSearchState {
     @Default(6) int maxGuest,
     @Default(0.0) double minPrice,
     @Default(6.0) double maxPrice,
+    @Default(10) int radiusInKm,
   }) = _PlaceSearchState;
 
   factory PlaceSearchState.reset() => const PlaceSearchState();

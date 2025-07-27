@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:layali_flutter_app/domain/rest_client.dart';
 import 'package:layali_flutter_app/features/home/data/my_trips_model.dart';
 import 'package:layali_flutter_app/injection.dart';
@@ -8,6 +9,7 @@ import 'package:layali_flutter_app/services/listing_service.dart';
 part 'my_trips_cubit.freezed.dart';
 part 'my_trips_state.dart';
 
+@lazySingleton
 class MyTripsCubit extends Cubit<MyTripsState> {
   MyTripsCubit() : super(const MyTripsState());
 
@@ -16,7 +18,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
   Future<void> getMyTrips() async {
     try {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true, hasError: false));
       final response = await _restClient.getAllTrips();
       if (response.isSuccessful) {
         final myTripsModel = MyTripsModel.fromJson(response.body!);

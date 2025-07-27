@@ -72,10 +72,7 @@ class _SearchPageState extends State<SearchPage> {
                     state.minPrice == 0 || state.minPrice == 6
                         ? null
                         : state.minPrice * 200,
-                // maxGuest: state.maxGuest,
-                // minGuest: state.minGuest,
-                // minPrice: state.minPrice,
-                // maxPrice: state.maxPrice,
+                radius: state.radiusInKm,
               );
               context.router.pop();
             }
@@ -227,6 +224,27 @@ class _SearchPageState extends State<SearchPage> {
                                   },
                                 ),
                                 const Gap(8),
+                                const Text(
+                                  'Radius (in Km)',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                SfSlider(
+                                  value: state.radiusInKm,
+                                  max: 50,
+                                  min: 10,
+                                  showTicks: true,
+                                  showLabels: true,
+                                  interval: 10,
+                                  stepSize: 10,
+                                  onChanged: (value) {
+                                    context
+                                        .read<PlaceSearchCubit>()
+                                        .setRadiusInKm(
+                                          (value as double).toInt(),
+                                        );
+                                  },
+                                ),
+                                const Gap(16),
                                 const Text(
                                   'Guests',
                                   style: TextStyle(fontWeight: FontWeight.bold),
