@@ -55,27 +55,32 @@ class _ExplorePageState extends State<ExplorePage> {
                   } else if (state.properties?.results.isEmpty ?? true) {
                     return const Center(child: Text('No Properties found'));
                   }
-                  return ListView.separated(
-                    controller: _listScrollController,
-                    itemBuilder: (context, index) {
-                      if (index == state.totalItems) {
-                        return const Center(
-                          child: SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: CircularProgressIndicator(),
-                          ),
+                  return RefreshIndicator(
+                    onRefresh:
+                        () =>
+                            context.read<ListingPropetyCubit>().getAllListing(),
+                    child: ListView.separated(
+                      controller: _listScrollController,
+                      itemBuilder: (context, index) {
+                        if (index == state.totalItems) {
+                          return const Center(
+                            child: SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                        return PropertyCard(
+                          property: state.properties!.results[index],
                         );
-                      }
-                      return PropertyCard(
-                        property: state.properties!.results[index],
-                      );
-                    },
-                    separatorBuilder: (context, index) => const Gap(24),
-                    itemCount:
-                        state.hasReachLastPage
-                            ? state.totalItems
-                            : state.totalItems + 1,
+                      },
+                      separatorBuilder: (context, index) => const Gap(24),
+                      itemCount:
+                          state.hasReachLastPage
+                              ? state.totalItems
+                              : state.totalItems + 1,
+                    ),
                   );
                 },
               ),

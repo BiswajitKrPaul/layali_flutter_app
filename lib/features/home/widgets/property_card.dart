@@ -99,7 +99,6 @@ class _PropertyCardState extends State<PropertyCard> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-                // widget.property.location.city,
                 widget.property.title,
                 style: Theme.of(
                   context,
@@ -112,8 +111,7 @@ class _PropertyCardState extends State<PropertyCard> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-                // widget.property.location.country.name,
-                'Country',
+                widget.property.location.city,
                 style: Theme.of(context).textTheme.labelMedium,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

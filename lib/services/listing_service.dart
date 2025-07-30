@@ -19,6 +19,19 @@ abstract class ListingService extends ChopperService {
 
   @GET(path: '/my-bookings')
   Future<Response<Map<String, dynamic>>> getAllTrips();
+
+  @GET(path: '/multi-request/cart')
+  Future<Response<List<Map<String, dynamic>>>> getPropertyDetails();
+
+  @POST(path: '/multi-request/add')
+  Future<Response<Map<String, dynamic>>> addPropertyToCart(
+    @Field('property_id') String propertyId,
+  );
+
+  @DELETE(path: '/multi-request/remove/{listing_id}')
+  Future<Response<Map<String, dynamic>>> removePropertyFromCart(
+    @Path('listing_id') String listingId,
+  );
 }
 
 enum BookingMode { standard, proposal }

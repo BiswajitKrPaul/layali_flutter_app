@@ -76,7 +76,6 @@ abstract class Image with _$Image {
 @freezed
 abstract class Location with _$Location {
   const factory Location({
-    @JsonKey(name: 'id') required int id,
     @JsonKey(name: 'city') required String city,
     @JsonKey(name: 'country') required Country country,
   }) = _Location;
@@ -87,10 +86,8 @@ abstract class Location with _$Location {
 
 @freezed
 abstract class Country with _$Country {
-  const factory Country({
-    @JsonKey(name: 'id') required int id,
-    @JsonKey(name: 'name') required String name,
-  }) = _Country;
+  const factory Country({@JsonKey(name: 'name') required String name}) =
+      _Country;
 
   factory Country.fromJson(Map<String, dynamic> json) =>
       _$CountryFromJson(json);

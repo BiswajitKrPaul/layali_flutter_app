@@ -9,6 +9,7 @@ import 'package:layali_flutter_app/common/cubits/location_service_cubit/location
 import 'package:layali_flutter_app/domain/storage_service.dart';
 import 'package:layali_flutter_app/features/home/cubits/listing_property_cubit/listing_propety_cubit.dart';
 import 'package:layali_flutter_app/features/home/cubits/my_trips_cubit/my_trips_cubit.dart';
+import 'package:layali_flutter_app/features/listing/cubits/cart_cubit/cart_cubit.dart';
 import 'package:layali_flutter_app/features/listing/cubits/place_search_cubit/place_search_cubit.dart';
 import 'package:layali_flutter_app/injection.dart';
 import 'package:layali_flutter_app/l10n/app_localizations.dart';
@@ -45,6 +46,7 @@ void main() async {
         ),
         BlocProvider(create: (context) => getIt.get<PlaceSearchCubit>()),
         BlocProvider(create: (ctx) => getIt.get<MyTripsCubit>()),
+        BlocProvider(create: (ctx) => getIt.get<CartCubit>()),
       ],
       child: const MyApp(),
     ),

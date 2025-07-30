@@ -7,8 +7,7 @@ import 'package:lottie/lottie.dart';
 
 @RoutePage()
 class BookingSuccessPage extends StatelessWidget {
-  const BookingSuccessPage({required this.bookingId, super.key});
-  final String bookingId;
+  const BookingSuccessPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +29,8 @@ class BookingSuccessPage extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   style: Theme.of(context).textTheme.titleMedium,
-                  children: [
-                    const TextSpan(
-                      text: 'Your Booking was successful with ID:',
-                    ),
-                    TextSpan(
-                      text: '  $bookingId',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                  children: const [
+                    TextSpan(text: 'Your Booking was successful'),
                   ],
                 ),
               ),

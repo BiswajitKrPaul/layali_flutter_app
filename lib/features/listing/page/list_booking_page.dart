@@ -7,9 +7,12 @@ import 'package:intl/intl.dart';
 import 'package:layali_flutter_app/common/utils/constants.dart';
 import 'package:layali_flutter_app/features/listing/cubits/bargain_apartment_cubit/bargain_apartment_cubit.dart';
 import 'package:layali_flutter_app/features/listing/cubits/book_apartment_cubit/book_apartment_cubit.dart';
+import 'package:layali_flutter_app/features/listing/cubits/cart_cubit/cart_cubit.dart';
+import 'package:layali_flutter_app/features/listing/cubits/cart_item_cubit/cart_item_cubit.dart';
 import 'package:layali_flutter_app/features/listing/data/property_detail_model.dart';
 import 'package:layali_flutter_app/features/listing/widgets/cart_counter.dart';
 import 'package:layali_flutter_app/features/listing/widgets/property_checkout_image.dart';
+import 'package:layali_flutter_app/injection.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 @RoutePage()
@@ -31,6 +34,7 @@ class ListBookingPage extends StatefulWidget implements AutoRouteWrapper {
               (context) =>
                   BargainApartmentCubit()..setPrice(property.pricePerNight),
         ),
+        BlocProvider(create: (ctx) => CartItemCubit()),
       ],
       child: this,
     );
@@ -251,25 +255,57 @@ class _ListBookingPageState extends State<ListBookingPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: 48,
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(
-                              color: Theme.of(context).primaryColorDark,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                    BlocBuilder<CartItemCubit, CartItemState>(
+                      builder: (context, cartItemState) {
+                        return Expanded(
+                          child: SizedBox(
+                            height: 48,
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                side: BorderSide(
+                                  color: Theme.of(context).primaryColorDark,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              onPressed:
+                                  cartItemState.isLoading
+                                      ? null
+                                      : () {
+                                        getIt
+                                                .get<CartCubit>()
+                                                .state
+                                                .hasProperty(widget.property.id)
+                                            ? context
+                                                .read<CartItemCubit>()
+                                                .removePropertyFromCart(
+                                                  widget.property.id,
+                                                )
+                                            : context
+                                                .read<CartItemCubit>()
+                                                .addPropertyToCart(
+                                                  widget.property.id,
+                                                );
+                                      },
+                              child:
+                                  cartItemState.isLoading
+                                      ? const CircularProgressIndicator()
+                                      : Text(
+                                        context
+                                                .watch<CartCubit>()
+                                                .state
+                                                .hasProperty(widget.property.id)
+                                            ? 'Remove from cart'
+                                            : 'Save for later',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                             ),
                           ),
-                          onPressed: () {},
-                          child: const Text(
-                            'Save for later',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                     const Gap(8),
                     Expanded(

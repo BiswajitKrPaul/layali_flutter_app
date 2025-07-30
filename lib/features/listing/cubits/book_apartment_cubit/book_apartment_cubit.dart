@@ -67,16 +67,10 @@ class BookApartmentCubit extends Cubit<BookApartmentState> {
         mode: BookingMode.standard.name,
       );
       if (response.isSuccessful) {
-        unawaited(
-          getIt.get<AppRouter>().replaceAll([
-            const HomePageRoute(),
-            BookingSuccessPageRoute(
-              bookingId:
-                  (response.body!['booking'] as Map<String, dynamic>)['id']
-                      as String,
-            ),
-          ]),
-        );
+        await getIt.get<AppRouter>().replaceAll([
+          const HomePageRoute(),
+          const BookingSuccessPageRoute(),
+        ]);
       } else {
         emit(
           state.copyWith(
@@ -89,7 +83,7 @@ class BookApartmentCubit extends Cubit<BookApartmentState> {
           ),
         );
       }
-    } catch (_) {
+    } catch (e) {
       emit(
         state.copyWith(
           hasError: true,
