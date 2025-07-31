@@ -22,7 +22,7 @@ class RestUnprotectedService {
   ChopperClient get client => _client;
 }
 
-@singleton
+@lazySingleton
 class RestProtectedService {
   final _client = ChopperClient(
     baseUrl: Uri.parse(Env.baseUrl),

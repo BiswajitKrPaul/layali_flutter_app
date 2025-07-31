@@ -16,7 +16,7 @@ part 'book_apartment_state.dart';
 class BookApartmentCubit extends Cubit<BookApartmentState> {
   BookApartmentCubit() : super(const BookApartmentState());
 
-  final _restClient =
+  final ListingService _restClient =
       getIt.get<RestProtectedService>().client.getService<ListingService>();
 
   void _softReset() {
